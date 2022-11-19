@@ -1,5 +1,12 @@
 <script>
-    import InventorySlot from "$lib/inventory/InventoryItem.svelte";
+    import Inventory from "$lib/inventory/Inventory.svelte";
+
+    // TODO: fetch inventory data from server
+    const data = [
+        { id: "donut", count: 2 },
+        { id: "cookie", count: 16 },
+        { id: "custard", count: 6387 },
+    ];
 </script>
 
-<InventorySlot id="donut" count={1} />
+<Inventory items={data} />
