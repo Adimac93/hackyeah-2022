@@ -1,5 +1,6 @@
 <script>
     import Button from "$lib/components/Button.svelte";
+    import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
 
     let dialogOpen = false;
@@ -15,8 +16,19 @@
             <div>Some kind of info on the right side idk</div>
         </div>
     </header>
-    <Dialog title="test dialog 123" isOpen={dialogOpen} on:dialogClose={() => dialogOpen = false} useButtons={false}>
-        test dialog 123
+    <Dialog title="Menu" isOpen={dialogOpen} on:dialogClose={() => dialogOpen = false} useButtons={false}>
+        <div class="links">
+            <LinkButton type="secondary" href="/map">Map</LinkButton>
+            <LinkButton type="destructive" href="/map">???</LinkButton>
+            <LinkButton type="primary" href="/map">Profit</LinkButton>
+        </div>
+        <div class="divider"></div>
+        <div class="bottom-buttons">
+            <form method="POST" action="/logout">
+                <Button type="destructive" href="/logout">Log out</Button>
+            </form>
+            <LinkButton type="secondary" href="/settings">Settings</LinkButton>
+        </div>
     </Dialog>
     <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}>menu</Button>
 </div>
@@ -44,6 +56,30 @@
 
     .header-left {
         min-width: max-content;
+    }
+
+    .header-right {
+        text-align: right;
+    }
+
+    .links {
+        display: flex;
+        width: 100%;
+        flex-flow: column nowrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .divider {
+        border-bottom: 1px solid black;
+        width: 100%;
+        margin: 12px 0;
+    }
+
+    .bottom-buttons {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 8px;
     }
 
     :global(.menu) {
