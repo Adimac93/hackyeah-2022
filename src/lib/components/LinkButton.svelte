@@ -1,12 +1,13 @@
 <script lang="ts">
     export let type: "primary" | "secondary" | "destructive";
     export let shape: "rectangle" | "round" = "rectangle";
+    export let href: string;
 </script>
 
 <!-- is there a better way to add classes? -->
-<button
+<a
     class:button={true}
-    on:click
+    {href}
     class:primary={type == "primary"}
     class:secondary={type == "secondary"}
     class:destructive={type == "destructive"}
@@ -16,7 +17,7 @@
     {...$$restProps}
 >
     <slot />
-</button>
+</a>
 
 <style lang="scss">
     // TODO: hover animations
@@ -26,6 +27,9 @@
         cursor: pointer;
         font-family: inherit;
         font-size: inherit;
+
+        color: black;
+        text-decoration: none;
     }
 
     .button:disabled {

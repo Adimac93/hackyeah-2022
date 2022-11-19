@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Card from "./Card.svelte";
     import Point from "./Point.svelte";
     import { selectedPoint } from "./selectedPoint";
 
@@ -53,14 +52,18 @@
             description: "Lorem ipsum dolor, sit amet qhdnq. Gieancoa cub veions deak.",
         },
     ];
+
+    function hideCard() {
+        $selectedPoint = null;
+    }
 </script>
 
-<div class="map" on:click={() => ($selectedPoint = null)}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="map" on:click={hideCard}>
     <img src="https://i.imgur.com/PtPjiDQ.png" alt="map" />
     {#each points as point}
         <Point {point} />
     {/each}
-    <Card />
 </div>
 
 <style>
