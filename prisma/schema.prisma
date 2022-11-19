@@ -67,6 +67,7 @@ enum TradeStatus {
 
 model Group {
   id      String        @id @default(uuid())
+  name String
   users   UserGroup[]
   invites GroupInvite[]
 }
