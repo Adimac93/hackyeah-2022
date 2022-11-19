@@ -1,0 +1,14 @@
+{
+    "donut": {
+        "name": "Donut",
+        "icon": "🍩"
+    },
+    "cookie": {
+        "name": "Cookie",
+        "icon": "🍪"
+    },
+    "custard": {
+        "name": "Custard",
+        "icon": "🍮"
+    }
+}
