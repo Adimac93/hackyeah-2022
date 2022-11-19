@@ -1,25 +1,12 @@
-import rawData from "../../data/items.json";
-
 export interface Item {
+    id: string,
     name: string;
     icon: string;
-}
-
-export interface InventoryRecord {
-    id: string;
     count: number;
 }
 
-const data = rawData as Record<string, Item>;
-
 export function isValidItem(id: string) {
-    return id in data;
+    // return id in data;
+    return undefined;
 }
 
-export function getItemData(id: string) {
-    if (!isValidItem(id)) {
-        throw Error(`Invalid item ID ${id}`);
-    }
-
-    return data[id] as Item;
-}

@@ -2,12 +2,12 @@
     import InventoryItem from "$lib/inventory/InventoryItem.svelte";
     import type { Recipe } from "$lib/inventory/Recipe";
     import type { Inventory } from "$lib/inventory/Inventory";
-    import type { InventoryRecord } from "$lib/inventory/Item";
+    import type { Item } from "$lib/inventory/Item";
 
     export let recipe: Recipe;
     export let inventory: Inventory | undefined = undefined;
 
-    function available(item: InventoryRecord) {
+    function available(item: Item) {
         if (!inventory) return null;
         else return inventory.hasItem(item.id, item.count);
     }

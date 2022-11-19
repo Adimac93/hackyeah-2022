@@ -1,17 +1,15 @@
 <script lang="ts">
     import Button from "$lib/components/Button.svelte";
     import Recipe from "./Recipe.svelte";
-    import recipes from "../../data/recipes.json";
+    import type { Recipe as RecipeType } from "$lib/inventory/Recipe";
     import { canCraft } from "$lib/inventory/Recipe";
     import { Inventory } from "$lib/inventory/Inventory";
     import InventoryDisplay from "$lib/inventory/InventoryDisplay.svelte";
 
     // TODO: get this from the server
-    const inventory = new Inventory([
-        { id: "donut", count: 2 },
-        { id: "cookie", count: 16 },
-        { id: "custard", count: 6387 },
-    ]);
+    const inventory = new Inventory([]);
+    // TODO: get this from the server too
+    const recipes: RecipeType[] = [];
 
     // this is kinda inefficient but who cares
     $: craftable = recipes.filter((recipe) => canCraft(inventory, recipe));
@@ -24,7 +22,7 @@
 <InventoryDisplay {inventory} />
 
 <h2>Craftable recipes</h2>
-<ul class="craftable-recipes">
+<ul class="recipe-list">
     {#each craftable as recipe}
         <li class="recipe">
             <Recipe {recipe} />
@@ -34,7 +32,7 @@
 </ul>
 
 <h2>Recipes with missing ingredients</h2>
-<ul class="uncraftable-recipes">
+<ul class="recipe-list">
     {#each uncraftable as recipe}
         <li class="recipe">
             <Recipe {inventory} {recipe} />
@@ -44,6 +42,12 @@
 </ul>
 
 <style lang="scss">
+    .recipe-list {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 12px;
+    }
+
     .recipe {
         display: flex;
         flex-flow: column nowrap;

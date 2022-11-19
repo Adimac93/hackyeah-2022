@@ -1,9 +1,9 @@
-import type { InventoryRecord } from "./Item";
+import type { Item } from "./Item";
 
 export class Inventory {
-    items: InventoryRecord[];
+    items: Item[];
 
-    constructor(items: InventoryRecord[]) {
+    constructor(items: Item[]) {
         this.items = items;
     }
 
