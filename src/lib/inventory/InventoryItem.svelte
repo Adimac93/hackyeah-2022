@@ -1,10 +1,3 @@
-<div class="inventory-slot">
-    {itemData.icon} {itemData.name}
-    {#if count}
-        <span class="count">&#xd7; {count}</span>
-    {/if}
-</div>
-
 <script lang="ts">
     import { getItemData } from "./Item";
     // TODO: make this an enum or something idk
@@ -12,6 +5,14 @@
     export let count: number = 0;
     $: itemData = getItemData(id);
 </script>
+
+<div class="inventory-slot">
+    {itemData.icon}
+    {itemData.name}
+    {#if count}
+        <span class="count">&#xd7; {count}</span>
+    {/if}
+</div>
 
 <style lang="scss">
     .inventory-slot {
