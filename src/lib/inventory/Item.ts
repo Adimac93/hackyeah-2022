@@ -1,8 +1,10 @@
-export interface Item {
+export interface PartialItem {
     id: string,
     name: string;
     icon: string;
-    cost: number;
     count: number;
 }
 
+export type Item = PartialItem & {
+    cost: number;
+}
