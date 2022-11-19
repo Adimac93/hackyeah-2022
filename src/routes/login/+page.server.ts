@@ -37,6 +37,6 @@ export const actions: Actions = {
 
         event.cookies.set("session", session.id);
 
-        return redirect(300, "/group-create");
+        throw redirect(302, "/group-select");
     },
 };

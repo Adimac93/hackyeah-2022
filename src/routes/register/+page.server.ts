@@ -1,5 +1,5 @@
 import { db } from "$lib/server/database";
-import { invalid, type Actions } from "@sveltejs/kit";
+import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import { hash } from "argon2";
 
 export const actions: Actions = {
@@ -29,5 +29,7 @@ export const actions: Actions = {
         });
 
         event.cookies.set("session", session.id, { httpOnly: true, secure: true });
+
+        throw redirect(302, "/group-select");
     },
 };
