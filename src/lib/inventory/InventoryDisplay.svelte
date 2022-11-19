@@ -7,7 +7,7 @@
 
 <div class="inventory">
     {#each inventory.items as item}
-        <InventoryItem item={item} />
+        <InventoryItem {item} />
     {/each}
 </div>
 

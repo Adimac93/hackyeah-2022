@@ -10,4 +10,4 @@ export class Inventory {
     hasItem(id: string, count?: number) {
         return this.items.some((invItem) => invItem.id == id && invItem.count > (count ?? 0));
     }
-};
+}

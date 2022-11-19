@@ -9,7 +9,7 @@
 
 <div class="inventory-slot">
     {#if available != null}
-        <div class="status" class:green={available} class:red={!available}></div>
+        <div class="status" class:green={available} class:red={!available} />
     {/if}
     <div class="wrapper">
         {itemData.icon}

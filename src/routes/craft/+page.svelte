@@ -21,13 +21,13 @@
 <h1>Crafting</h1>
 
 <h2>Your inventory</h2>
-<InventoryDisplay inventory={inventory} />
+<InventoryDisplay {inventory} />
 
 <h2>Craftable recipes</h2>
 <ul class="craftable-recipes">
     {#each craftable as recipe}
         <li class="recipe">
-            <Recipe recipe={recipe} />
+            <Recipe {recipe} />
             <Button type="primary">Craft</Button>
         </li>
     {/each}
@@ -37,12 +37,11 @@
 <ul class="uncraftable-recipes">
     {#each uncraftable as recipe}
         <li class="recipe">
-            <Recipe inventory={inventory} recipe={recipe} />
+            <Recipe {inventory} {recipe} />
             <Button type="primary" disabled>Craft</Button>
         </li>
     {/each}
 </ul>
-
 
 <style lang="scss">
     .recipe {

@@ -9,7 +9,7 @@
     class:primary={type == "primary"}
     class:secondary={type == "secondary"}
     class:destructive={type == "destructive"}
-    { ...$$restProps }
+    {...$$restProps}
 >
     <slot />
 </button>

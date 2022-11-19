@@ -15,7 +15,7 @@
 
 <div>
     <strong>Result</strong>
-    <InventoryItem item={recipe.output}/>
+    <InventoryItem item={recipe.output} />
 </div>
 <div class="ingredients">
     <strong>Ingredients</strong>
