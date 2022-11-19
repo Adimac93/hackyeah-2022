@@ -4,12 +4,13 @@
     import Dialog from "$lib/components/Dialog.svelte";
 
     let dialogOpen = false;
+    let healthPercent = 0.69;
 </script>
 
 <div class="wrapper">
     <header class="header">
         <div class="header-left">
-            <div>❤ 20/20</div>
+            <div>❤ <div class="health-bar" style:--fullness={healthPercent}><div class="health-bar-fill"></div></div></div>
             <div>💰 4.20</div>
         </div>
         <div class="header-right">
@@ -30,8 +31,13 @@
             <LinkButton type="secondary" href="/settings">Settings</LinkButton>
         </div>
     </Dialog>
-    <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}>menu</Button>
+    <!-- <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}><img src="/menu_icon.png" alt="Menu"></Button> -->
+    <button class="menu-button" on:click={() => dialogOpen = true}>
+        <img src="/menu_icon.png" alt="menu">
+    </button>
 </div>
+
+<svelte:window on:keyup={(ev) => { if (ev.code == "Escape") dialogOpen = !dialogOpen }}/>
 
 <style lang="scss">
     .wrapper {
@@ -62,6 +68,19 @@
         text-align: right;
     }
 
+    .health-bar {
+        display: inline-block;
+        width: 100px;
+        height: 1rem;
+        border: 2px solid black;
+    }
+
+    .health-bar-fill {
+        background-color: red;
+        width: calc(100% * var(--fullness));
+        height: 100%;
+    }
+
     .links {
         display: flex;
         width: 100%;
@@ -82,9 +101,16 @@
         gap: 8px;
     }
 
-    :global(.menu) {
+    .menu-button {
         position: absolute;
         bottom: 8px;
         right: 8px;
+        display: block;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        img {
+            height: 4rem;
+        }
     }
 </style>
