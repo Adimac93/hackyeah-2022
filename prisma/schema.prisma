@@ -11,13 +11,15 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       String     @id @default(uuid())
   username String
-  email    String  @unique
+  email    String     @unique
   password String
+  coins    BigInt
   items    Item[]
   trades   Trade[]
-  coins    BigInt
+  group    UserGroup?
+  session  Session[]
 }
 
 model ItemType {
@@ -44,7 +46,7 @@ model Trade {
   destinationUserId String
   items             TradeItem[]
   status            TradeStatus
-  cost BigInt
+  cost              BigInt
 }
 
 model TradeItem {
@@ -61,4 +63,34 @@ enum TradeStatus {
   ACCEPTED
   DECLINED
   CANCELED
+}
+
+model Group {
+  id      String        @id @default(uuid())
+  users   UserGroup[]
+  invites GroupInvite[]
+}
+
+model UserGroup {
+  group   Group   @relation(fields: [groupId], references: [id])
+  groupId String
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String  @unique
+  isOwner Boolean
+
+  @@id([groupId, userId])
+}
+
+model GroupInvite {
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+  email   String
+
+  @@id([groupId, email])
+}
+
+model Session {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
