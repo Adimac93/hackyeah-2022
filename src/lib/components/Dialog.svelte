@@ -114,14 +114,14 @@
         }
 
         .content {
-            padding: 8px;
+            margin: 8px;
         }
 
         .actions {
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
-            padding: 0 8px 8px 8px;
+            margin: 0 8px 8px 8px;
         }
     }
 </style>
