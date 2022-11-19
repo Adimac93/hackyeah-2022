@@ -1,10 +1,10 @@
-import type { InventoryRecord } from "./Item";
+import type { Item } from "./Item";
 import type { Inventory } from "./Inventory";
 
 export interface Recipe {
     id: string;
-    output: InventoryRecord;
-    ingredients: InventoryRecord[];
+    output: Item;
+    ingredients: Item[];
 }
 
 export function canCraft(inventory: Inventory, recipe: Recipe) {
