@@ -1,7 +1,7 @@
-import { assert, it, test } from 'vitest';
+import { assert, it, test } from "vitest";
 
-test('Vitest', () => {
-	it('1+1', () => {
-		assert(1 + 1 == 2);
-	});
+test("Vitest", () => {
+    it("1+1", () => {
+        assert(1 + 1 == 2);
+    });
 });

@@ -1,12 +1,8 @@
-<nav>
-    This is a navbar
-</nav>
+<nav>This is a navbar</nav>
 
-<slot/>
+<slot />
 
-<footer class="footer">
-    This is a footer that additionally looks cool.
-</footer>
+<footer class="footer">This is a footer that additionally looks cool.</footer>
 
 <style>
     .footer {

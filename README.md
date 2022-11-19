@@ -4,9 +4,9 @@
 
 ### Commands
 
-- main `npm run test`
-- unit `npx vitest`
-- end-to-end `npx playwright`
+-   main `npm run test`
+-   unit `npx vitest`
+-   end-to-end `npx playwright`
 
 ### Files
 
