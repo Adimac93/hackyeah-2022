@@ -13,6 +13,7 @@
 </script>
 
 <div class="wrapper">
+    <slot/>
     <header class="header">
         <div class="header-left">
             <div>❤ <div class="health-bar" style:--fullness={healthPercent}><div class="health-bar-fill"></div></div></div>
@@ -22,7 +23,6 @@
             <div>Some kind of info on the right side idk</div>
         </div>
     </header>
-    <slot/>
     <Dialog title="Menu" isOpen={dialogOpen} on:dialogClose={() => dialogOpen = false} useButtons={false}>
         <div class="links">
             <LinkButton type="secondary" href="/map">Map</LinkButton>
@@ -54,7 +54,7 @@
     }
 
     .header {
-        position: absolute;
+        position: fixed;
         top: 0;
         width: calc(100vw - 16px);
         padding: 8px;
@@ -108,7 +108,7 @@
     }
 
     .menu-button {
-        position: absolute;
+        position: fixed;
         bottom: 8px;
         right: 8px;
         display: block;

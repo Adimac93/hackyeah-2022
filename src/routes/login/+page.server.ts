@@ -1,14 +1,13 @@
 import { db } from "$lib/server/database";
-import type { PageServerLoad } from ".svelte-kit/types/src/routes/group-select/$types";
+import type { PageServerLoad } from "./$types";
 import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import { verify } from "argon2";
 
 export const load: PageServerLoad = async ({ locals }) => {
     let user = locals.user;
-    if (user)
-        throw redirect(302, "/group-select");
+    if (user) throw redirect(302, "/group-select");
     return {};
-}
+};
 
 export const actions: Actions = {
     default: async (event) => {
