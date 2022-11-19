@@ -11,50 +11,54 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  username String?
-  email String @unique
+  id       String  @id @default(uuid())
+  username String
+  email    String  @unique
   password String
-  items UserItem[]
-  trades UserTrade[]
-  coins BigInt
+  items    Item[]
+  trades   Trade[]
+  coins    BigInt
+}
+
+model ItemType {
+  id    String @id @default(uuid())
+  name  String
+  cost  BigInt
+  items Item[]
 }
 
 model Item {
-  id String @id @default(uuid())
-  name String
-  users UserItem[]
+  id         String      @id @default(uuid())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  type       ItemType    @relation(fields: [typeId], references: [id])
+  typeId     String
+  count      Int
+  tradeItems TradeItem[]
 }
-
-model UserItem {
-  user User @relation(fields:[userId], references: [id])
-  userId String
-  item Item @relation(fields: [itemId], references: [id])
-  itemId String
-  trade UserTrade? @relation(fields: [tradeId],references: [id])
-  tradeId String?
-  count Int
-  @@id([userId, itemId])
-}
-
 
 model Trade {
-  id String @id @default(uuid())
-  users UserTrade[]
+  id                String      @id @default(uuid())
+  sourceUser        User        @relation(fields: [sourceUserId], references: [id])
+  sourceUserId      String
+  destinationUserId String
+  items             TradeItem[]
+  status            TradeStatus
+  cost BigInt
 }
 
-model UserTrade {
-  id String @id @default(uuid())
-  trade Trade @relation(fields: [tradeId], references: [id])
+model TradeItem {
+  id      String @id @default(uuid())
+  trade   Trade  @relation(fields: [tradeId], references: [id])
   tradeId String
-  user User @relation(fields: [userId], references: [id])
-  userId String
-  items UserItem[]
-  status TradeStatus  
+  item    Item   @relation(fields: [itemId], references: [id])
+  itemId  String
+  count   Int
 }
 
 enum TradeStatus {
   AWAITING
   ACCEPTED
   DECLINED
+  CANCELED
 }
