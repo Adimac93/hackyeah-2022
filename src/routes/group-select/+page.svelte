@@ -6,9 +6,12 @@
 </script>
 
 {#each data.invites as invite}
-    <div>
+    <form method="POST" class="form">
+        <input type="hidden" name="groupId" value="{invite.group.id}" />
+
         User <strong>{invite.senderUsername} ({invite.senderEmail})</strong> invites you to group named <strong>{invite.group.name}</strong>
-    </div>
+        <Button type="primary">Join</Button>
+    </form>
 {/each}
 
 <Button type="primary">Create own group</Button>

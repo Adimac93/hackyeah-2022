@@ -1,5 +1,32 @@
 import { db } from "$lib/server/database";
-import { invalid, type Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from ".svelte-kit/types/src/routes/$types";
+import { invalid, redirect, type Actions } from "@sveltejs/kit";
+
+export const load: PageServerLoad = async ({ locals }) => {
+    let user = locals.user;
+    if (!user)
+        throw redirect(302, "/401");
+
+    let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
+    if (!userGroup || !userGroup.isOwner)
+        throw redirect(302, "/401");
+
+    return {
+        users: await db.userGroup.findMany({
+            where: { groupId: userGroup.groupId },
+            select: {
+                isOwner: true,
+                user: { 
+                    select: {
+                        id: true,
+                        username: true,
+                        email: true
+                    }
+                }
+            }
+        })
+    };
+}
 
 export const actions: Actions = {
     default: async (event) => {

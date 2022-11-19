@@ -1,5 +1,5 @@
 import { db } from "$lib/server/database";
-import { invalid, redirect } from "@sveltejs/kit";
+import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -39,3 +39,27 @@ export const load: PageServerLoad = async ({ locals }) => {
         })).then(x => x)
     };
 }
+
+export const actions: Actions = {
+    default: async (event) => {
+        let user = event.locals.user;
+        if (!user)
+            return invalid(401, {});
+
+        let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
+        if (userGroup)
+            return invalid(400, { info: "This user already has a group."});
+
+        let form = await event.request.formData();
+        let groupId = form.get("groupId");
+
+        if (!groupId)
+            return invalid(400, { info: "missing fields" });
+
+        await db.userGroup.create({ data: {
+            group: { connect: { id: groupId.toString() } },
+            user: { connect: { id: user.id }},
+            isOwner: false
+        }});
+    },
+};
