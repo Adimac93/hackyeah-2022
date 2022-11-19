@@ -24,14 +24,14 @@
     }
 
     .primary {
-        background-color: lightgreen;
+        background-color: var(--primary);
     }
 
     .secondary {
-        background-color: lightgray;
+        background-color: var(--secondary);
     }
 
     .destructive {
-        background-color: tomato;
+        background-color: var(--destructive);
     }
 </style>
