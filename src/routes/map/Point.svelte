@@ -19,7 +19,7 @@
     <div transition:fade={{ duration: 200 }} style:left="{point.x}px" style:top="{point.y}px">
         <h2>{point.title}</h2>
         <p>{point.description}</p>
-        <a href="/map/foo">Go there</a>
+        <a href="/map/{point.id}">Go there</a>
     </div>
 {/if}
 

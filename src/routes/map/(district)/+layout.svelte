@@ -1,15 +1,22 @@
-<script>
+<script type="ts">
     import Button from "$lib/components/Button.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
 
     let dialogOpen = false;
+    let healthPercent = 0.69;
+
+    function handleEscape(ev: KeyboardEvent) {
+        if (ev.code == "Escape") dialogOpen = !dialogOpen;
+        console.log(dialogOpen);
+    }
 </script>
 
 <div class="wrapper">
+    <slot/>
     <header class="header">
         <div class="header-left">
-            <div>❤ 20/20</div>
+            <div>❤ <div class="health-bar" style:--fullness={healthPercent}><div class="health-bar-fill"></div></div></div>
             <div>💰 4.20</div>
         </div>
         <div class="header-right">
@@ -25,13 +32,18 @@
         <div class="divider"></div>
         <div class="bottom-buttons">
             <form method="POST" action="/logout">
-                <Button type="destructive" href="/logout">Log out</Button>
+                <Button type="destructive">Log out</Button>
             </form>
             <LinkButton type="secondary" href="/settings">Settings</LinkButton>
         </div>
     </Dialog>
-    <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}>menu</Button>
+    <!-- <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}><img src="/menu_icon.png" alt="Menu"></Button> -->
+    <button class="menu-button" on:click={() => dialogOpen = true}>
+        <img src="/menu_icon.png" alt="menu">
+    </button>
 </div>
+
+<svelte:window on:keyup={handleEscape}/>
 
 <style lang="scss">
     .wrapper {
@@ -42,7 +54,7 @@
     }
 
     .header {
-        position: absolute;
+        position: fixed;
         top: 0;
         width: calc(100vw - 16px);
         padding: 8px;
@@ -60,6 +72,19 @@
 
     .header-right {
         text-align: right;
+    }
+
+    .health-bar {
+        display: inline-block;
+        width: 100px;
+        height: 1rem;
+        border: 2px solid black;
+    }
+
+    .health-bar-fill {
+        background-color: red;
+        width: calc(100% * var(--fullness));
+        height: 100%;
     }
 
     .links {
@@ -82,9 +107,16 @@
         gap: 8px;
     }
 
-    :global(.menu) {
-        position: absolute;
+    .menu-button {
+        position: fixed;
         bottom: 8px;
         right: 8px;
+        display: block;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        img {
+            height: 4rem;
+        }
     }
 </style>

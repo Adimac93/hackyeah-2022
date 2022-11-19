@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 
 export interface Point {
+    id: string;
     x: number;
     y: number;
     title: string;

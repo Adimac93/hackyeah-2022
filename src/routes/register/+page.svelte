@@ -5,7 +5,7 @@
 <form method="POST" class="form">
     <label>E-mail <input name="email" type="email" required /></label>
     <label>Password <input name="password" type="password" required /></label>
-    <label>Repeat password <input name="repeat-password" required /></label>
+    <label>Repeat password <input name="repeat-password" type="password" required /></label>
     <Button type="primary">Register</Button>
 </form>
 
