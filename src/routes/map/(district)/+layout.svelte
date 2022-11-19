@@ -17,6 +17,7 @@
             <div>Some kind of info on the right side idk</div>
         </div>
     </header>
+    <slot/>
     <Dialog title="Menu" isOpen={dialogOpen} on:dialogClose={() => dialogOpen = false} useButtons={false}>
         <div class="links">
             <LinkButton type="secondary" href="/map">Map</LinkButton>

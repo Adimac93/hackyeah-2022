@@ -39,6 +39,12 @@
 
     .round {
         border-radius: 50%;
+        padding: 8px;
+        :global(img) {
+            display: block;
+            width: 1rem;
+            height: 1rem;
+        }
     }
 
     .primary {

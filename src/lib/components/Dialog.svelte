@@ -10,6 +10,12 @@
     let ref: HTMLDivElement;
     let portal: HTMLDivElement;
 
+    const dispatcher = createEventDispatcher();
+
+    function close() {
+        dispatcher("dialogClose");
+    }
+
     onMount(() => {
         portal = document.createElement("div");
         portal.className = "portal"
@@ -20,21 +26,12 @@
     onDestroy(() => {
         if (portal) document.body.removeChild(portal);
     });
-
-    function handleKeyUp(ev: KeyboardEvent) {
-        if (ev.code == "Escape") isOpen = false;
-    }
-
-    const dispatcher = createEventDispatcher();
-
-    function close() {
-        dispatcher("dialogClose");
-    }
 </script>
 
 <div class="portal-clone">
     {#if isOpen}
-        <div class="backdrop" class:visible={isOpen} on:click={close} on:keyup={handleKeyUp} transition:fade={{ duration: 300 }}>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="backdrop" class:visible={isOpen} on:click={close} transition:fade={{ duration: 300 }}>
             <div role="dialog" class="dialog" bind:this={ref}>
                 <div class="title">
                     <span class="title-text">{title}</span>
@@ -89,7 +86,7 @@
 
         .title {
             background-color: var(--primary);
-            padding: 8px;
+            padding: 12px;
             display: flex;
             flex-flow: row nowrap;
             justify-content: space-between;
@@ -114,14 +111,14 @@
         }
 
         .content {
-            margin: 8px;
+            margin: 12px;
         }
 
         .actions {
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
-            margin: 0 8px 8px 8px;
+            margin: 0 12px 12px 12px;
         }
     }
 </style>
