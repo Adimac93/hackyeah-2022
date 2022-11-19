@@ -5,6 +5,11 @@ export interface Item {
     icon: string;
 }
 
+export interface InventoryRecord {
+    id: string;
+    count: number;
+}
+
 const data = rawData as Record<string, Item>;
 
 export function isValidItem(id: string) {
