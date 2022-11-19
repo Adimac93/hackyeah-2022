@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       String    @id @default(uuid())
   username String
-  email    String  @unique
+  email    String    @unique
   password String
   items    Item[]
   trades   Trade[]
   coins    BigInt
+  session  Session[]
 }
 
 model ItemType {
@@ -44,7 +45,7 @@ model Trade {
   destinationUserId String
   items             TradeItem[]
   status            TradeStatus
-  cost BigInt
+  cost              BigInt
 }
 
 model TradeItem {
@@ -61,4 +62,10 @@ enum TradeStatus {
   ACCEPTED
   DECLINED
   CANCELED
+}
+
+model Session {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
