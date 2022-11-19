@@ -7,7 +7,7 @@ export const actions: Actions = {
         if (!user)
             return invalid(401, {});
 
-        let userGroup = user.group;
+        let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
         if (!userGroup)
             return invalid(400, {});
         if (!userGroup.isOwner)
@@ -19,6 +19,9 @@ export const actions: Actions = {
         if (!email)
             return invalid(400, { info: "missing fields" });
 
-        await db.groupInvite.create({ data: { group: userGroup.group, email: email } });
+        await db.groupInvite.create({ data: {
+            group: { connect: { id: userGroup.groupId } },
+            email: email.toString()
+        } });
     },
 };
