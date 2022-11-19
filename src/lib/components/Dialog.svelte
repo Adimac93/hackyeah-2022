@@ -29,29 +29,32 @@
 </script>
 
 <div class="portal-clone">
-    {#if isOpen}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div class="backdrop" class:visible={isOpen} on:click={close} transition:fade={{ duration: 300 }}>
-            <div role="dialog" class="dialog" bind:this={ref}>
-                <div class="title">
-                    <span class="title-text">{title}</span>
-                    <button class="close-button" on:click={close}><svg class="close-icon" viewBox="1 1 9 9"><line x1="2" y1="2" x2="8" y2="8" stroke="black"/><line x1="8" y1="2" x2="2" y2="8" stroke="black"/></svg></button></div>
-                <div class="content">
-                    <slot/>
-                </div>
-                {#if useButtons}
-                    <div class="actions">
-                        <slot name="actions"><Button type="primary" on:click={close}>OK</Button></slot>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="dialog-wrapper" bind:this={ref}>
+        {#if isOpen}
+            <div class="backdrop" class:visible={isOpen} on:click={close} transition:fade={{ duration: 300 }}>
+                <div role="dialog" class="dialog">
+                    <div class="title">
+                        <span class="title-text">{title}</span>
+                        <button class="close-button" on:click={close}><svg class="close-icon" viewBox="1 1 9 9"><line x1="2" y1="2" x2="8" y2="8" stroke="black"/><line x1="8" y1="2" x2="2" y2="8" stroke="black"/></svg></button></div>
+                    <div class="content">
+                        <slot/>
                     </div>
-                {/if}
+                    {#if useButtons}
+                        <div class="actions">
+                            <slot name="actions"><Button type="primary" on:click={close}>OK</Button></slot>
+                        </div>
+                    {/if}
+                </div>
             </div>
-        </div>
-    {/if}
+        {/if}
+    </div>
 </div>
 
 <style lang="scss">
     .backdrop {
         display: none;
+        opacity: 0;
         position: fixed;
         top: 0;
         left: 0;
@@ -60,9 +63,11 @@
         background-color: rgba(0, 0, 0, 0.4);
 
         z-index: 100;
+        transition: opacity .3s ease-in;
 
         &.visible {
             display: block;
+            opacity: 1;
         }
     }
 
