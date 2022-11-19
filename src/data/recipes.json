@@ -1,0 +1,18 @@
+[
+    {
+        "id": "make-custard-donut",
+        "output": { "id": "custard_donut", "count": 1 },
+        "ingredients": [
+            { "id": "donut", "count": 1 },
+            { "id": "custard", "count": 1 }
+        ]
+    },
+    {
+        "id": "make-custard-from-nonexisty-and-cookie",
+        "output": { "id": "custard", "count": 69 },
+        "ingredients": [
+            { "id": "cookie", "count": 1 },
+            { "id": "nonexisty", "count": 1 }
+        ]
+    }
+]

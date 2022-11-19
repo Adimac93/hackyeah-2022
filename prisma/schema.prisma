@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String     @id @default(uuid())
+  username String
+  email    String     @unique
+  password String
+  coins    BigInt
+  items    Item[]
+  trades   Trade[]
+  group    UserGroup?
+  session  Session[]
+}
+
+model ItemType {
+  id    String @id @default(uuid())
+  name  String
+  cost  BigInt
+  items Item[]
+}
+
+model Item {
+  id         String      @id @default(uuid())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  type       ItemType    @relation(fields: [typeId], references: [id])
+  typeId     String
+  count      Int
+  tradeItems TradeItem[]
+}
+
+model Trade {
+  id                String      @id @default(uuid())
+  sourceUser        User        @relation(fields: [sourceUserId], references: [id])
+  sourceUserId      String
+  destinationUserId String
+  items             TradeItem[]
+  status            TradeStatus
+  cost              BigInt
+}
+
+model TradeItem {
+  id      String @id @default(uuid())
+  trade   Trade  @relation(fields: [tradeId], references: [id])
+  tradeId String
+  item    Item   @relation(fields: [itemId], references: [id])
+  itemId  String
+  count   Int
+}
+
+enum TradeStatus {
+  AWAITING
+  ACCEPTED
+  DECLINED
+  CANCELED
+}
+
+model Group {
+  id      String        @id @default(uuid())
+  users   UserGroup[]
+  invites GroupInvite[]
+}
+
+model UserGroup {
+  group   Group   @relation(fields: [groupId], references: [id])
+  groupId String
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String  @unique
+  isOwner Boolean
+
+  @@id([groupId, userId])
+}
+
+model GroupInvite {
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+  email   String
+
+  @@id([groupId, email])
+}
+
+model Session {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
