@@ -19,11 +19,15 @@
     <div transition:fade={{ duration: 200 }} style:left="{point.x}px" style:top="{point.y}px">
         <h2>{point.title}</h2>
         <p>{point.description}</p>
-        <a href="/map/{point.id}">Go there</a>
+        <a href="/map/{point.id}"><img class="arrow" src="https://i.imgur.com/WeYp8NK.png" alt="Go There"></a>
     </div>
 {/if}
 
 <style>
+    .arrow {
+        margin: 10% 0 0 41%;
+        width: 3rem;
+    }
     button {
         position: absolute;
         margin: 0;
@@ -39,7 +43,6 @@
         background-color: white;
         border: 8px solid black;
         translate: -50% calc(-100% - 1.5rem);
-        height: 6rem;
         width: max-content;
     }
     h2 {
