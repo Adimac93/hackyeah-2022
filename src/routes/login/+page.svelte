@@ -3,8 +3,8 @@
 </script>
 
 <form method="POST" class="form">
-    <label>E-mail <input name="email" type="email" required></label>
-    <label>Password <input name="password" type="password" required></label>
+    <label>E-mail <input name="email" type="email" required /></label>
+    <label>Password <input name="password" type="password" required /></label>
     <Button type="primary">Log in</Button>
 </form>
 
