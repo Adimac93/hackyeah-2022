@@ -51,13 +51,15 @@ export const actions: Actions = {
             return invalid(400, { info: "This user already has a group."});
 
         let form = await event.request.formData();
-        let groupId = form.get("groupId");
+        let groupId = form.get("groupId")?.toString();
 
         if (!groupId)
             return invalid(400, { info: "missing fields" });
 
+        await db.groupInvite.deleteMany({ where: { groupId, email: user.email }});
+
         await db.userGroup.create({ data: {
-            group: { connect: { id: groupId.toString() } },
+            group: { connect: { id: groupId } },
             user: { connect: { id: user.id }},
             isOwner: false
         }});

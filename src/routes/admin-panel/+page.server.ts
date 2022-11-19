@@ -41,14 +41,39 @@ export const actions: Actions = {
             return invalid(400, {});
 
         let form = await event.request.formData();
+
         let email = form.get("email");
+        if (email) {
+            await db.groupInvite.create({ data: {
+                group: { connect: { id: userGroup.groupId } },
+                email: email.toString()
+            } });
+            return;
+        }
 
-        if (!email)
-            return invalid(400, { info: "missing fields" });
+        let userId = form.get("userId")?.toString();
+        if (userId) {
+            let group = await db.group.findUniqueOrThrow({
+                where: { id: userGroup.groupId },
+                include: { users: true }
+            });
 
-        await db.groupInvite.create({ data: {
-            group: { connect: { id: userGroup.groupId } },
-            email: email.toString()
-        } });
+            let f = group.users.find(x => x.groupId == group.id);
+            if (!f)
+                return invalid(401, {});
+            if (f.isOwner)
+                return invalid(400, { info: "Unable to kick owner of the group." });
+
+            await db.user.update({
+                where: { id: userId },
+                data: { group: undefined }
+            });
+
+            await db.userGroup.delete({ where: { userId }});
+
+            return;
+        }
+
+        return invalid(400, { info: "missing fields" });
     },
 };
