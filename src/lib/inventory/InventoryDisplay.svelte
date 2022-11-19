@@ -1,13 +1,13 @@
 <script lang="ts">
     import InventoryItem from "./InventoryItem.svelte";
-    import type { InventoryRecord } from "./Item";
+    import type { Inventory } from "./Inventory";
 
-    export let items: InventoryRecord[];
+    export let inventory: Inventory;
 </script>
 
 <div class="inventory">
-    {#each items as item}
-        <InventoryItem id={item.id} count={item.count} />
+    {#each inventory.items as item}
+        <InventoryItem item={item} />
     {/each}
 </div>
 

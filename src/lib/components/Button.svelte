@@ -9,6 +9,7 @@
     class:primary={type == "primary"}
     class:secondary={type == "secondary"}
     class:destructive={type == "destructive"}
+    { ...$$restProps }
 >
     <slot />
 </button>
@@ -21,6 +22,12 @@
         border: none;
         cursor: pointer;
         font-family: inherit;
+        font-size: inherit;
+    }
+
+    .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
     }
 
     .primary {
