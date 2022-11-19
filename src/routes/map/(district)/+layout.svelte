@@ -1,10 +1,15 @@
-<script>
+<script type="ts">
     import Button from "$lib/components/Button.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
 
     let dialogOpen = false;
     let healthPercent = 0.69;
+
+    function handleEscape(ev: KeyboardEvent) {
+        if (ev.code == "Escape") dialogOpen = !dialogOpen;
+        console.log(dialogOpen);
+    }
 </script>
 
 <div class="wrapper">
@@ -27,7 +32,7 @@
         <div class="divider"></div>
         <div class="bottom-buttons">
             <form method="POST" action="/logout">
-                <Button type="destructive" href="/logout">Log out</Button>
+                <Button type="destructive">Log out</Button>
             </form>
             <LinkButton type="secondary" href="/settings">Settings</LinkButton>
         </div>
@@ -38,7 +43,7 @@
     </button>
 </div>
 
-<svelte:window on:keyup={(ev) => { if (ev.code == "Escape") dialogOpen = !dialogOpen }}/>
+<svelte:window on:keyup={handleEscape}/>
 
 <style lang="scss">
     .wrapper {

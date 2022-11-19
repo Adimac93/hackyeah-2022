@@ -1,6 +1,14 @@
 import { db } from "$lib/server/database";
-import { invalid, type Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from ".svelte-kit/types/src/routes/group-select/$types";
+import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import { verify } from "argon2";
+
+export const load: PageServerLoad = async ({ locals }) => {
+    let user = locals.user;
+    if (user)
+        throw redirect(302, "/group-select");
+    return {};
+}
 
 export const actions: Actions = {
     default: async (event) => {
@@ -28,5 +36,7 @@ export const actions: Actions = {
         });
 
         event.cookies.set("session", session.id);
+
+        return redirect(300, "/group-create");
     },
 };
