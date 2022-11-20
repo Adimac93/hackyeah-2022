@@ -20,11 +20,12 @@
     <header class="header">
         <div class="header-left">
             <div>
-                ❤ <div class="health-bar" style:--fullness={healthPercent}>
+                <img style="width: 1rem" src="/city_health.png" alt="❤ ">
+                <div class="health-bar" style:--fullness={healthPercent}>
                     <div class="health-bar-fill" />
                 </div>
             </div>
-            <div>💰 {data.coins}</div>
+            <div><img  style="width: 1rem; margin-top: 5px" src="/founds.png" alt="💰"> {data.coins}</div>
         </div>
         <div class="header-right">
             <div>Time until end of event</div>
@@ -55,7 +56,7 @@
     </button>
 
     <button class="map-button" on:click={() => goto("/map")}>
-        <img src="/menu_icon.png" alt="Map" />
+        <img src="https://i.imgur.com/GRq3qYo.png" alt="Map" />
     </button>
 </div>
 
@@ -130,7 +131,7 @@
         border: none;
         cursor: pointer;
         img {
-            height: 4rem;
+            height: 3rem;
         }
     }
 
