@@ -46,5 +46,7 @@ export const actions: Actions = {
             type: { connect: { id: offer.typeId } },
             user: { connect: { id: user.id } }            
         } });
+
+        return { success: true };
     },
 };
