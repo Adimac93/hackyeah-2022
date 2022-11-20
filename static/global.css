@@ -10,3 +10,7 @@ body {
 img {
     image-rendering: crisp-edges;
 }
+
+h1 {
+    text-align: center;
+}
