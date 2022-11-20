@@ -2,7 +2,7 @@ import { db } from "$lib/server/database";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
-    let trades = await db.trade.findMany({
+    const trades = await db.trade.findMany({
         where: {
             sourceUser: {
                 group: { group: { is: { users: { some: { user: { id: locals.user!.id } } } } } },
@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ locals }) => {
         },
     });
 
-    let returnTrades = trades.map((trade) => {
+    const returnTrades = trades.map((trade) => {
         return {
             id: trade.id,
             cost: trade.cost,

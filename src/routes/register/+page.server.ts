@@ -4,17 +4,16 @@ import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import { hash } from "argon2";
 
 export const load: PageServerLoad = async ({ locals }) => {
-    let user = locals.user;
-    if (user) throw redirect(302, "/group-select");
+    if (locals.user) throw redirect(302, "/group-select");
     return {};
 };
 
 export const actions: Actions = {
     default: async (event) => {
-        let form = await event.request.formData();
+        const form = await event.request.formData();
         let email = form.get("email");
         let password = form.get("password");
-        let rPassword = form.get("repeat-password");
+        const rPassword = form.get("repeat-password");
 
         if (!email || !password || !rPassword) {
             return invalid(400, { email, missing: true });
@@ -28,10 +27,10 @@ export const actions: Actions = {
 
         password = await hash(password);
 
-        let isAlreadyRegistered = await db.user.findUnique({ where: { email } });
+        const isAlreadyRegistered = await db.user.findUnique({ where: { email } });
         if (isAlreadyRegistered) return invalid(400, { info: "user already exists" });
 
-        let session = await db.session.create({
+        const session = await db.session.create({
             data: { user: { create: { email, password, coins: 0, username: "Hackyouser" } } },
         });
 

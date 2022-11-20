@@ -1,5 +1,11 @@
 <div>
-    <img height="567" width="1190" src="/recycle_district.png" alt="Recycle District" usemap="#image-map" />
+    <img
+        height="567"
+        width="1190"
+        src="/recycle_district.png"
+        alt="Recycle District"
+        usemap="#image-map"
+    />
 
     <map name="image-map">
         <area

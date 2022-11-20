@@ -7,9 +7,9 @@
 
 {#each data.offers as offer}
     <form method="POST" class="form">
-        <input type="hidden" name="shopOfferId" value="{offer.id}" />
+        <input type="hidden" name="shopOfferId" value={offer.id} />
 
-        <img src="{offer.type.icon}" alt="{offer.type.name}" />
+        <img src={offer.type.icon} alt={offer.type.name} />
         {offer.count} * {offer.type.name} for {offer.cost}
         <Button type="primary">Buy</Button>
     </form>

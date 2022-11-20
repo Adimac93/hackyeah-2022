@@ -7,4 +7,4 @@
     const inventory = new Inventory(data.data);
 </script>
 
-<InventoryDisplay inventory={inventory} />
+<InventoryDisplay {inventory} />

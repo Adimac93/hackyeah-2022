@@ -2,11 +2,11 @@ import { db } from "$lib/server/database";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
-    let recipes = await db.recipe.findMany({
+    const recipes = await db.recipe.findMany({
         include: { ingredients: { include: { item: true } }, outputItem: true },
     });
 
-    let returnRecipes = recipes.map((recipe) => {
+    const returnRecipes = recipes.map((recipe) => {
         return {
             outputItem: {
                 name: recipe.outputItem.name,

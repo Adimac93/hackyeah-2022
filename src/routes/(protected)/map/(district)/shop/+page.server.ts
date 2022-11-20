@@ -19,16 +19,16 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
     default: async (event) => {
-        let user = event.locals.user;
+        const user = event.locals.user;
         if (!user) return invalid(401, {});
 
-        let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
+        const userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
         if (!userGroup) return invalid(400, {});
         if (!userGroup.isOwner) return invalid(400, {});
 
-        let form = await event.request.formData();
+        const form = await event.request.formData();
 
-        let email = form.get("email");
+        const email = form.get("email");
         if (email) {
             await db.groupInvite.create({
                 data: {
@@ -39,14 +39,14 @@ export const actions: Actions = {
             return;
         }
 
-        let userId = form.get("userId")?.toString();
+        const userId = form.get("userId")?.toString();
         if (userId) {
-            let group = await db.group.findUniqueOrThrow({
+            const group = await db.group.findUniqueOrThrow({
                 where: { id: userGroup.groupId },
                 include: { users: true },
             });
 
-            let f = group.users.find((x) => x.groupId == group.id);
+            const f = group.users.find((x) => x.groupId == group.id);
             if (!f) return invalid(401, {});
             if (f.isOwner) return invalid(400, { info: "Unable to kick owner of the group." });
 
