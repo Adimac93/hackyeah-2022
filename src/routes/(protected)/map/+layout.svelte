@@ -6,6 +6,7 @@
     import { goto } from "$app/navigation";
     import type { FullTask } from "$lib/task";
     import { tasks as taskTypes } from "$lib/task";
+    import Giraffe from "$lib/components/Giraffe.svelte";
 
     export let data: LayoutData;
     let tasks: FullTask[] = data.tasks;
@@ -50,7 +51,7 @@
             {/each}
         </div>
         <div class="header-right">
-            <div>Time until end of event</div>
+            <div>Next event in: N/A</div>
         </div>
     </header>
     <Dialog
@@ -71,6 +72,8 @@
             <LinkButton type="secondary" href="/settings">Settings</LinkButton>
         </div>
     </Dialog>
+
+    <Giraffe />
     <!-- <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}><img src="/menu_icon.png" alt="Menu"></Button> -->
     <button class="menu-button" on:click={() => (dialogOpen = true)}>
         <img src="/menu_icon.png" alt="Menu" />
@@ -106,10 +109,21 @@
 
     .header-left {
         min-width: max-content;
+        background-color: var(--bg-2);
+        padding: 6px;
+        border-radius: 8px;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
     }
 
     .header-right {
         text-align: right;
+        div {
+            font-size: 2rem;
+            background-color: var(--bg-2);
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+        }
     }
 
     .health {

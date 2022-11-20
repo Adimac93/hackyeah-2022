@@ -19,6 +19,7 @@ export const tasks: Record<string, Task> = {
         "area": "HOME",
         "cooldown": 60,
         "reward": {
+            coins: 10,
             items: [{ name: "Glass Bottle", count: 1 }]
         }
     }
