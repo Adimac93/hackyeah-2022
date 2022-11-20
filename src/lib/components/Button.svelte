@@ -26,6 +26,7 @@
         cursor: pointer;
         font-family: inherit;
         font-size: inherit;
+        text-align: center;
     }
 
     .button:disabled {

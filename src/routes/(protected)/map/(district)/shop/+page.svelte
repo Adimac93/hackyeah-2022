@@ -20,7 +20,7 @@
     .background-image {
         display: block;
         margin: auto;
-        min-height: 100%;
-        aspect-ratio: 1190 / 567;
+        height: 100%;
+        aspect-ratio: 128 / 61;
     }
 </style>

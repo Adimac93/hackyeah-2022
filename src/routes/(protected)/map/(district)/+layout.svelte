@@ -59,9 +59,8 @@
         useButtons={false}
     >
         <div class="links">
-            <LinkButton type="secondary" href="/map">Map</LinkButton>
-            <LinkButton type="destructive" href="/map">???</LinkButton>
-            <LinkButton type="primary" href="/map">Profit</LinkButton>
+            <LinkButton type="secondary" href="/inventory">Inventory</LinkButton>
+            <LinkButton type="primary" href="/map">Map</LinkButton>
         </div>
         <div class="divider" />
         <div class="bottom-buttons">
@@ -156,6 +155,10 @@
         flex-flow: column nowrap;
         align-items: center;
         gap: 8px;
+
+        :global(.button) {
+            width: 100%;
+        }
     }
 
     .divider {
@@ -167,7 +170,14 @@
     .bottom-buttons {
         display: flex;
         flex-flow: row wrap;
+        width: 100%;
         gap: 8px;
+        :global(*) {
+            flex-grow: 1;
+        }
+        :global(form .button) {
+            width: 100%;
+        }
     }
 
     .menu-button, .map-button {
