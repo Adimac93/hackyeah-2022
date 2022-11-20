@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Donut",
+        "icon": "🍩",
+        "cost": 69
+    },
+    {
+        "name": "Cookie",
+        "icon": "🍪",
+        "cost": 6
+    },
+    {
+        "name": "Custard",
+        "icon": "🍮",
+        "cost": 25
+    },
+    {
+        "name": "Donut with Custard",
+        "icon": "🍩",
+        "cost": 150
+    }
+]

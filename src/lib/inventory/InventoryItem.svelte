@@ -1,10 +1,8 @@
 <script lang="ts">
-    import { getItemData } from "./Item";
-    import type { InventoryRecord } from "./Item";
+    import type { Item } from "./Item";
 
-    export let item: InventoryRecord;
+    export let item: Item;
     export let available: boolean | null = null;
-    $: itemData = getItemData(item.id);
 </script>
 
 <div class="inventory-slot">
@@ -12,8 +10,8 @@
         <div class="status" class:green={available} class:red={!available} />
     {/if}
     <div class="wrapper">
-        {itemData.icon}
-        {itemData.name}
+        {item.icon}
+        {item.name}
         {#if item.count != 0}
             <span class="count">&#xd7; {item.count}</span>
         {/if}

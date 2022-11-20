@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
     import InventoryDisplay from "$lib/inventory/InventoryDisplay.svelte";
     import { Inventory } from "$lib/inventory/Inventory";
+    import type { PageData } from "./$types";
 
-    // TODO: fetch inventory data from server
-    const data = new Inventory([]);
+    export let data: PageData;
+    const inventory = new Inventory(data.data);
 </script>
 
-<InventoryDisplay inventory={data} />
+<InventoryDisplay inventory={inventory} />
