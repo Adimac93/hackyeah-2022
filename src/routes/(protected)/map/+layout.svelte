@@ -23,7 +23,7 @@
         });
         tasks.splice(tasks.findIndex((el) => el.id == taskID), 1);
         // @ts-ignore
-        data.coins += taskTypes[taskName].reward;
+        data.coins += taskTypes[taskName].reward.coins;
         tasks = tasks;
     }
 
