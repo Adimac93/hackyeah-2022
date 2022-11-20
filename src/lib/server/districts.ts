@@ -1,4 +1,4 @@
-import type { Point } from "src/routes/map/selectedPoint";
+import type { Point } from "src/routes/(protected)/map/selectedPoint";
 
 export const districts: Point[] = [
     {

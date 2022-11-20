@@ -1,14 +1,9 @@
 import { db } from "$lib/server/database";
-import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
-    if (!locals.user) {
-        throw redirect(301, "/");
-    }
-
     let items = await db.item.findMany({
-        where: { user: { id: locals.user.id } },
+        where: { user: { id: locals.user!.id } },
         include: { type: true },
     });
 
