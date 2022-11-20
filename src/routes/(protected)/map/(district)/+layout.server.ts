@@ -6,5 +6,5 @@ export const load: LayoutServerLoad = async ({ locals }) => {
         where: { id: locals.user!.id },
         select: { coins: true },
     });
-    return { coins: coins || 0 };
+    return { coins: coins?.coins ?? 0 };
 };

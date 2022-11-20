@@ -12,4 +12,4 @@
     <Button type="destructive">Leave a group</Button>
 {/if}
 
-<Button type="destructive">Remove account</Button>
+<Button type="destructive">Delete account</Button>

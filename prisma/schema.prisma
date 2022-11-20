@@ -15,19 +15,22 @@ model User {
   username String
   email    String     @unique
   password String
-  coins    Int
+  coins    Int        @default(0)
+  score    Int        @default(0)
   items    Item[]
   trades   Trade[]
   group    UserGroup?
   session  Session[]
+
+  Task Task[]
 }
 
 model ItemType {
-  id      String       @id @default(uuid())
-  name    String
-  cost    Int
-  icon    String
-  items   Item[]
+  id         String       @id @default(uuid())
+  name       String
+  cost       Int
+  icon       String
+  items      Item[]
   recipeItem RecipeItem[]
   recipe     Recipe[]
   ShopOffert ShopOffert[]
@@ -44,11 +47,11 @@ model Item {
 }
 
 model Trade {
-  id                String      @id @default(uuid())
-  sourceUser        User        @relation(fields: [sourceUserId], references: [id])
-  sourceUserId      String
-  items             TradeItem[]
-  cost              Int
+  id           String      @id @default(uuid())
+  sourceUser   User        @relation(fields: [sourceUserId], references: [id])
+  sourceUserId String
+  items        TradeItem[]
+  cost         Int
 }
 
 model TradeItem {
@@ -59,8 +62,6 @@ model TradeItem {
   itemId  String
   count   Int
 }
-
-
 
 model ShopOffert {
   id     String   @id @default(uuid())
@@ -117,4 +118,19 @@ model RecipeItem {
   count    Int
 
   @@id([itemId, recipeId])
+}
+
+model Task {
+  id            String   @id @default(uuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  name          String   @unique
+  area          Area
+  lastAccessed  DateTime
+  timeToRestart Int
+}
+
+enum Area {
+  HOME
+  PILE
 }

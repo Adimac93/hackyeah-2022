@@ -1,5 +1,5 @@
 import { db } from "$lib/server/database";
-import { invalid, type Actions } from "@sveltejs/kit";
+import { invalid, redirect, type Actions } from "@sveltejs/kit";
 
 export const actions: Actions = {
     default: async (event) => {
@@ -21,5 +21,7 @@ export const actions: Actions = {
                 isOwner: true,
             },
         });
+
+        throw redirect(302, "/admin-panel");
     },
 };
