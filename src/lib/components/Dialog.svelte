@@ -79,8 +79,8 @@
 
         z-index: 101;
 
-        width: max-content;
-        height: max-content;
+        width: 50%;
+        height: 50%;
         max-width: 95vw;
         max-height: 95vh;
 
@@ -89,8 +89,10 @@
         overflow-x: hidden;
         overflow-y: auto;
 
+        
+
         .title {
-            background-color: var(--primary);
+            //background-color: var(--primary);
             padding: 12px;
             display: flex;
             flex-flow: row nowrap;
@@ -117,6 +119,7 @@
 
         .content {
             margin: 12px;
+            
         }
 
         .actions {
