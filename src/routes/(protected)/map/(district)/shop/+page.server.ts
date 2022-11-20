@@ -1,4 +1,5 @@
 import { db } from "$lib/server/database";
+import { UserHelper } from "$lib/server/UserHelper";
 import { invalid, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
@@ -19,47 +20,33 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
     default: async (event) => {
-        const user = event.locals.user;
-        if (!user) return invalid(401, {});
+        let user = event.locals.user;
+        if (!user)
+            return invalid(401, {});
 
-        const userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
-        if (!userGroup) return invalid(400, {});
-        if (!userGroup.isOwner) return invalid(400, {});
+        let form = await event.request.formData();
+        let offerId = form.get("shopOfferId")?.toString();
+        let count = form.get("shopOfferCount")?.toString();
+        if (!offerId || !count)
+            return invalid(400, {});
 
-        const form = await event.request.formData();
+        let countI = Number.parseInt(count);
+        if (countI <= 0)
+            return invalid(400, {});
 
-        const email = form.get("email");
-        if (email) {
-            await db.groupInvite.create({
-                data: {
-                    group: { connect: { id: userGroup.groupId } },
-                    email: email.toString(),
-                },
-            });
-            return;
-        }
+        let offer = await db.shopOffert.findUnique({ where: { id: offerId } });
+        if (!offer)
+            return invalid(400, {});
 
-        const userId = form.get("userId")?.toString();
-        if (userId) {
-            const group = await db.group.findUniqueOrThrow({
-                where: { id: userGroup.groupId },
-                include: { users: true },
-            });
+        if (!UserHelper.spendCoins(user, offer.cost * countI))
+            return { success: false };
+        
+        await db.item.create({ data: {
+            count: countI,
+            type: { connect: { id: offer.typeId } },
+            user: { connect: { id: user.id } }            
+        } });
 
-            const f = group.users.find((x) => x.groupId == group.id);
-            if (!f) return invalid(401, {});
-            if (f.isOwner) return invalid(400, { info: "Unable to kick owner of the group." });
-
-            await db.user.update({
-                where: { id: userId },
-                data: { group: undefined },
-            });
-
-            await db.userGroup.delete({ where: { userId } });
-
-            return;
-        }
-
-        return invalid(400, { info: "missing fields" });
+        return { success: true };
     },
 };
