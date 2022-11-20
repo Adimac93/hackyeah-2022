@@ -12,54 +12,33 @@
     // in pixels
     let offsetX = 720;
     let offsetY = 368;
+    let offsetStart = { x: offsetX, y: offsetY };
     let scale = 1.0;
 
-    let dragging = false;
-    let mousePos: { x: number, y: number } | null = null;
-    let offsetStart: { x: number, y: number } = { x: offsetX, y: offsetY }
-    let scaleStart = scale;
-    let scaleDistStart: number | null = null;
-    let dragStart: { x: number, y: number } | null = null;
+    let evCache: PointerEvent[] = [];
 
-    function startDragging(ev: MouseEvent | TouchEvent) {
-        // @ts-ignore
-        const mousePos = ev.touches ? { x: ev.touches[0].clientX, y: ev.touches[0].clientY } : { x: ev.clientX, y: ev.clientY };
-        dragStart = mousePos;
+    function startDragging(ev: PointerEvent) {
+        evCache.push(ev);
         offsetStart = { x: offsetX, y: offsetY };
-        scaleStart = scale;
-        dragging = true;
-
         hideCard();
     }
 
-    function stopDragging() {
-        dragging = false;
-    }
+    function handleMove(ev: PointerEvent) {
+        const index = evCache.findIndex((cachedEv) => cachedEv.pointerId == ev.pointerId);
+        evCache[index] = ev;
 
-    function handleMove(pos: {x: number, y: number}) {
-        mousePos = { x: pos.x, y: pos.y };
-        if (dragging && dragStart) {
-            const dx = mousePos.x - dragStart.x;
-            const dy = mousePos.y - dragStart.y;
-            offsetX = offsetStart.x + dx;
-            offsetY = offsetStart.y + dy;
+        // position
+        if (evCache.length > 0) {
+            offsetX += ev.movementX;
+            offsetY += ev.movementY;
+
+            // limit it so the map never goes off screen
         }
     }
 
-    function handleMouseMove(ev: MouseEvent) {
-        handleMove({x: ev.clientX, y: ev.clientY });
-    }
-
-    function handleTouchMove(ev: TouchEvent) {
-        handleMove({ x: ev.touches[0].clientX, y: ev.touches[0].clientY });
-        if (ev.touches.length > 1) {
-            // we're pinching!
-            if (scaleDistStart == null) {
-                // this is the start of a pinch
-                scaleDistStart = Math.sqrt((ev.touches[0].clientX - ev.touches[1].clientX)**2 + (ev.touches[0].clientY - ev.touches[1].clientY)**2);
-            }
-            scale = scaleStart * (Math.sqrt((ev.touches[0].clientX - ev.touches[1].clientX)**2 + (ev.touches[0].clientY - ev.touches[1].clientY)**2) / scaleDistStart)
-        }
+    function stopDragging(ev: PointerEvent) {
+        evCache = evCache.filter((cachedEv) => cachedEv.pointerId != ev.pointerId);
+        console.log(evCache);
     }
 </script>
 
@@ -68,8 +47,10 @@
     <div class="map"
         on:click={hideCard}
         style:--offsetX="{offsetX}px" style:--offsetY="{offsetY}px"
-        on:mousedown={startDragging} on:touchstart|preventDefault={startDragging}
-        on:mouseup={stopDragging} on:touchend|preventDefault={stopDragging} on:touchcancel|preventDefault={stopDragging}>
+        on:pointerdown={startDragging}
+        on:pointerup={stopDragging}
+        on:pointercancel={stopDragging}
+    >
         <img src="https://i.imgur.com/PtPjiDQ.png" alt="map" />
         {#each data.districts as point}
             <Point {point} />
@@ -77,13 +58,15 @@
     </div>
 </div>
 
-<svelte:window on:mousemove={handleMouseMove} on:touchmove={handleTouchMove}/>
+<svelte:window on:pointermove={handleMove}/>
 
 <style>
     .container {
         width: 100vw;
         height: 100vh;
         overflow: hidden;
+        display: grid;
+        place-items: center;
     }
 
     .map {
@@ -93,6 +76,7 @@
         transform: translate(-50%, -50%);
         width: min-content;
         height: min-content;
+        cursor: grab;
     }
 
     img {

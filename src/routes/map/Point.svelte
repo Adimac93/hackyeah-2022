@@ -35,6 +35,7 @@
         background-color: transparent;
         border: none;
         transform: translate(-50%, -50%);
+        cursor: pointer;
     }
     .tooltip {
         position: absolute;
@@ -43,6 +44,7 @@
         background-color: white;
         border: 8px solid black;
         width: max-content;
+        z-index: 150;
     }
 
     .tooltip.tt-top {
