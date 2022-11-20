@@ -1,3 +1,4 @@
+import { AdminPanel } from "$lib/server/AdminPanel";
 import { db } from "$lib/server/database";
 import type { PageServerLoad } from ".svelte-kit/types/src/routes/$types";
 import { invalid, redirect, type Actions } from "@sveltejs/kit";
@@ -76,11 +77,7 @@ export const actions: Actions = {
                 await db.userGroup.delete({ where: { userId } });
                 return;
             case "delete":
-                await db.userGroup.deleteMany({ where: {
-                    groupId: userGroup.groupId
-                } });
-
-                await db.group.delete({ where: { id: userGroup.groupId } });
+                await AdminPanel.deleteGroup(userGroup.groupId);
                 throw redirect(302, "/group-select");
         }
         

@@ -25,4 +25,9 @@ export class UserHelper {
 
         return true;
     }
+
+    static async leaveGroup(user: User) {
+        await db.userGroup.deleteMany({ where: { userId: user.id } });
+        await db.item.deleteMany({ where: { userId: user.id } });
+    }
 }

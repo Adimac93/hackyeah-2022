@@ -27,7 +27,7 @@
             <div>💰 {data.coins}</div>
         </div>
         <div class="header-right">
-            <div>Some kind of info on the right side idk</div>
+            <div>Time until end of event</div>
         </div>
     </header>
     <Dialog
