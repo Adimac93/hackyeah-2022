@@ -118,8 +118,7 @@
         }
 
         .content {
-            margin: 12px;
-            
+            margin: 10% 20% 15% 20%;
         }
 
         .actions {
