@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { ActionData } from "./$types";
     import Button from "$lib/components/Button.svelte";
+    import LinkButton from "$lib/components/LinkButton.svelte";
     export let form: ActionData;
 </script>
 
@@ -12,6 +13,8 @@
     {#if form?.info}
         <div>{form.info}</div>
     {/if}
+    <span>or</span>
+    <LinkButton href="/login" type="secondary">Login</LinkButton>
 </form>
 
 <style lang="scss">
@@ -26,5 +29,8 @@
             display: flex;
             flex-flow: column nowrap;
         }
+    }
+    span {
+        text-align: center;
     }
 </style>
