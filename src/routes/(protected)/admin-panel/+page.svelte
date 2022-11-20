@@ -12,7 +12,7 @@
 
 {#each data.users as user}
     <form method="POST" class="form">
-        <input type="hidden" name="userId" value="{user.user.id}" />
+        <input type="hidden" name="userId" value={user.user.id} />
 
         {user.user.username} ({user.user.email})
         {#if user.isOwner}

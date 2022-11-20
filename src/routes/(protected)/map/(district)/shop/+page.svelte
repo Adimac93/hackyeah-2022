@@ -7,7 +7,7 @@
 
 {#each data.offers as offer}
     <form method="POST" class="form">
-        <input type="hidden" name="shopOfferId" value="{offer.id}" />
+        <input type="hidden" name="shopOfferId" value={offer.id} />
 
         <input type="number" name="shopOfferCount" value="1" />
 

@@ -3,6 +3,7 @@
     import Button from "$lib/components/Button.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
+    import { goto } from "$app/navigation";
 
     export let data: LayoutData;
 
@@ -11,7 +12,6 @@
 
     function handleEscape(ev: KeyboardEvent) {
         if (ev.code == "Escape") dialogOpen = !dialogOpen;
-        console.log(dialogOpen);
     }
 </script>
 
@@ -51,7 +51,11 @@
     </Dialog>
     <!-- <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}><img src="/menu_icon.png" alt="Menu"></Button> -->
     <button class="menu-button" on:click={() => (dialogOpen = true)}>
-        <img src="/menu_icon.png" alt="menu" />
+        <img src="/menu_icon.png" alt="Menu" />
+    </button>
+
+    <button class="map-button" on:click={() => goto("/map")}>
+        <img src="/menu_icon.png" alt="Map" />
     </button>
 </div>
 
@@ -119,10 +123,8 @@
         gap: 8px;
     }
 
-    .menu-button {
+    .menu-button, .map-button {
         position: fixed;
-        bottom: 8px;
-        right: 8px;
         display: block;
         background: transparent;
         border: none;
@@ -130,5 +132,15 @@
         img {
             height: 4rem;
         }
+    }
+
+    .menu-button {
+        bottom: 8px;
+        right: 8px;
+    }
+
+    .map-button {
+        bottom: 8px;
+        left: 8px;
     }
 </style>
