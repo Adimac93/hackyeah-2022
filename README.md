@@ -14,11 +14,19 @@ Or
 > You must have this dependencies to host application.
 - Node.js 19
 - Playwright latest
+- PostgreSQL 15
 
 ## Installation
-Execute bellow command in repository root path.
+At the beggining you must create `.env` file in project root directory with environment variable named `DATABASE_URL` with value of connection to existing PostgreSQL database.
+
+Next you must download all node modules.
 ```
 npm ci
+```
+
+And finally you must migrate database by executing bellow command:
+```
+npx prisma migrate dev
 ```
 
 ## Running
