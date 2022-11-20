@@ -12,11 +12,11 @@
     }
 </script>
 
-<button on:click|stopPropagation={selectPoint} style:left="{point.x}px" style:top="{point.y}px">
+<button on:click|stopPropagation={selectPoint} style:left="{point.x}%" style:top="{point.y}%">
     <img src="https://i.imgur.com/QSnusCP.png" alt="square" />
 </button>
 {#if $selectedPoint == point}
-    <div transition:fade={{ duration: 200 }} style:left="{point.x}px" style:top="{point.y}px">
+    <div transition:fade={{ duration: 200 }} style:left="{point.x}%" style:top="{point.y}%" class:tt-top={ point.y >= 50 } class:tt-bottom={ point.y < 50 } class="tooltip">
         <h2>{point.title}</h2>
         <p>{point.description}</p>
         <a href="/map/{point.id}"><img class="arrow" src="https://i.imgur.com/WeYp8NK.png" alt="Go There"></a>
@@ -34,21 +34,31 @@
         padding: 0;
         background-color: transparent;
         border: none;
-        translate: -50% -50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
     }
-    div {
+    .tooltip {
         position: absolute;
         margin: 0;
         padding: 0.5rem;
         background-color: white;
         border: 8px solid black;
-        translate: -50% calc(-100% - 1.5rem);
         width: max-content;
+        z-index: 150;
     }
-    h2 {
+
+    .tooltip.tt-top {
+        transform: translate(-50%, calc(-100% - 1.5rem));
+    }
+
+    .tooltip.tt-bottom {
+        transform: translate(-50%, 1.5rem);
+    }
+
+    .tooltip h2 {
         margin: 0.5rem 0;
     }
-    p {
+    .tooltip p {
         margin: 0;
         width: 100%;
         max-width: 16rem;

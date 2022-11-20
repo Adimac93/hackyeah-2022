@@ -47,9 +47,7 @@ model Trade {
   id                String      @id @default(uuid())
   sourceUser        User        @relation(fields: [sourceUserId], references: [id])
   sourceUserId      String
-  destinationUserId String
   items             TradeItem[]
-  status            TradeStatus
   cost              Int
 }
 
@@ -62,12 +60,7 @@ model TradeItem {
   count   Int
 }
 
-enum TradeStatus {
-  AWAITING
-  ACCEPTED
-  DECLINED
-  CANCELED
-}
+
 
 model ShopOffert {
   id     String   @id @default(uuid())

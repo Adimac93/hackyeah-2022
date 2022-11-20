@@ -1,26 +1,22 @@
 import { db } from "$lib/server/database";
 import { UserHelper } from "$lib/server/UserHelper";
-import { invalid, redirect, type Actions } from "@sveltejs/kit";
+import { invalid, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals }) => {
-    let user = locals.user;
-    if (!user)
-        throw redirect(302, "/401");
-
+export const load: PageServerLoad = async () => {
     return {
         offers: db.shopOffert.findMany({
             include: {
                 type: {
                     select: {
                         icon: true,
-                        name: true
-                    }
-                }
-            }
-        })
-    }
-}
+                        name: true,
+                    },
+                },
+            },
+        }),
+    };
+};
 
 export const actions: Actions = {
     default: async (event) => {
