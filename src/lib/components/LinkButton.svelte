@@ -27,6 +27,7 @@
         cursor: pointer;
         font-family: inherit;
         font-size: inherit;
+        text-align: center;
 
         color: black;
         text-decoration: none;

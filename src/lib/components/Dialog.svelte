@@ -36,7 +36,8 @@
                 <div role="dialog" class="dialog">
                     <div class="title">
                         <span class="title-text">{title}</span>
-                        <button class="close-button" on:click={close}><svg class="close-icon" viewBox="1 1 9 9"><line x1="2" y1="2" x2="8" y2="8" stroke="black"/><line x1="8" y1="2" x2="2" y2="8" stroke="black"/></svg></button></div>
+                        <button class="close-button" on:click={close}><svg class="close-icon" viewBox="1 1 9 9"><line x1="2" y1="2" x2="8" y2="8" stroke="black"/><line x1="8" y1="2" x2="2" y2="8" stroke="black"/></svg></button>
+                    </div>
                     <div class="content">
                         <slot/>
                     </div>
@@ -79,8 +80,8 @@
 
         z-index: 101;
 
-        width: 50%;
-        height: 50%;
+        min-width: 50%;
+        min-height: 50%;
         max-width: 95vw;
         max-height: 95vh;
 
@@ -89,7 +90,7 @@
         overflow-x: hidden;
         overflow-y: auto;
 
-        
+
 
         .title {
             //background-color: var(--primary);
@@ -118,7 +119,7 @@
         }
 
         .content {
-            margin: 10% 20% 15% 20%;
+            margin: 2rem;
         }
 
         .actions {
