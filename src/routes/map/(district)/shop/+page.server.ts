@@ -1,4 +1,5 @@
 import { db } from "$lib/server/database";
+import { UserHelper } from "$lib/server/UserHelper";
 import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
@@ -27,46 +28,27 @@ export const actions: Actions = {
         if (!user)
             return invalid(401, {});
 
-        let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
-        if (!userGroup)
-            return invalid(400, {});
-        if (!userGroup.isOwner)
-            return invalid(400, {});
-
         let form = await event.request.formData();
+        let offerId = form.get("shopOfferId")?.toString();
+        let count = form.get("shopOfferCount")?.toString();
+        if (!offerId || !count)
+            return invalid(400, {});
 
-        let email = form.get("email");
-        if (email) {
-            await db.groupInvite.create({ data: {
-                group: { connect: { id: userGroup.groupId } },
-                email: email.toString()
-            } });
-            return;
-        }
+        let countI = Number.parseInt(count);
+        if (countI <= 0)
+            return invalid(400, {});
 
-        let userId = form.get("userId")?.toString();
-        if (userId) {
-            let group = await db.group.findUniqueOrThrow({
-                where: { id: userGroup.groupId },
-                include: { users: true }
-            });
+        let offer = await db.shopOffert.findUnique({ where: { id: offerId } });
+        if (!offer)
+            return invalid(400, {});
 
-            let f = group.users.find(x => x.groupId == group.id);
-            if (!f)
-                return invalid(401, {});
-            if (f.isOwner)
-                return invalid(400, { info: "Unable to kick owner of the group." });
-
-            await db.user.update({
-                where: { id: userId },
-                data: { group: undefined }
-            });
-
-            await db.userGroup.delete({ where: { userId }});
-
-            return;
-        }
-
-        return invalid(400, { info: "missing fields" });
+        if (!UserHelper.spendCoins(user, offer.cost * countI))
+            return { success: false };
+        
+        await db.item.create({ data: {
+            count: countI,
+            type: { connect: { id: offer.typeId } },
+            user: { connect: { id: user.id } }            
+        } });
     },
 };
