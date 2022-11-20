@@ -46,9 +46,9 @@ export const districts: Point[] = [
     {
         x: 31.25,
         y: 68,
-        title: "Financial District",
-        description: "Money, money, money...",
-        id: "finance",
+        title: "Plumbery District",
+        description: "Clean after yourself.",
+        id: "plumbery",
     },
     {
         x: 10.4,
