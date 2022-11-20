@@ -26,8 +26,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
     default: async (event) => {
-        const user = event.locals.user;
-        if (!user) return invalid(401, {});
+        let user = event.locals.user;
+        if (!user)
+            return invalid(401, {});
 
         const userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
         if (!userGroup) return invalid(400, {});
