@@ -18,5 +18,10 @@
         "name": "Donut with Custard",
         "icon": "🍩",
         "cost": 150
+    },
+    {
+        "name": "Glass Bottle",
+        "icon": "🧴",
+        "cost": 2
     }
 ]

@@ -4,8 +4,26 @@
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
     import { goto } from "$app/navigation";
+    import type { FullTask } from "$lib/task";
+    import { tasks as taskTypes } from "$lib/task";
 
     export let data: LayoutData;
+    let tasks: FullTask[] = data.tasks;
+
+    async function claimTask(taskID: string, taskName: string) {
+        // ask the backend to complete the task
+        await fetch("/api/complete-task", {
+            method: "POST",
+            body: JSON.stringify({id: taskID, name: taskName}),
+            headers: {
+                "content-type": "application/json"
+            }
+        });
+        tasks.splice(tasks.findIndex((el) => el.id == taskID), 1);
+        // @ts-ignore
+        data.coins += taskTypes[taskName].reward;
+        tasks = tasks;
+    }
 
     let dialogOpen = false;
     let healthPercent = 0.69;
@@ -25,6 +43,9 @@
                 </div>
             </div>
             <div>💰 {data.coins}</div>
+            {#each tasks as task}
+                <Button type="primary" on:click={() => claimTask(task.id, task.name)}>Claim task {task.name}</Button>
+            {/each}
         </div>
         <div class="header-right">
             <div>Time until end of event</div>
