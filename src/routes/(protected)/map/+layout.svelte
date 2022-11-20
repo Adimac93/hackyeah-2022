@@ -9,6 +9,7 @@
 
     export let data: LayoutData;
     let tasks: FullTask[] = data.tasks;
+    console.log(data);
 
     async function claimTask(taskID: string, taskName: string) {
         // ask the backend to complete the task

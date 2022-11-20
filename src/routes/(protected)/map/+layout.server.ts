@@ -1,6 +1,6 @@
 import { db } from "$lib/server/database";
 import { checkTask } from "$lib/server/task";
-import type { LayoutServerLoad } from "./$types";
+import type { LayoutServerLoad } from "../../../../.svelte-kit/types/src/routes/(protected)/map/(district)/$types";
 
 export const load: LayoutServerLoad = async ({ locals }) => {
     const coinsPromise = db.user.findFirst({

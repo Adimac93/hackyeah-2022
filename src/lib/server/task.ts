@@ -1,4 +1,5 @@
-import type { Area } from "@prisma/client";
+import type { Task } from "$lib/task";
+import type { Area, User } from "@prisma/client";
 import { db } from "./database";
 
 export const checkTask = async (userId: string, area: Area) => {
@@ -16,6 +17,21 @@ export const checkTask = async (userId: string, area: Area) => {
 
     return returnedTasks.filter((task) => task != undefined);
 };
+
+export const addTasks = async (
+    user: User,
+    tasks: (Task & { name: string })[]
+) => {
+    await db.task.createMany({
+        data: tasks.map((task) => ({
+            userId: user.id,
+            name: task.name,
+            area: task.area as Area,
+            lastAccessed: new Date(),
+            timeToRestart: task.cooldown,
+        }))
+    });
+}
 
 export const completeTask = async (
     taskId: string,

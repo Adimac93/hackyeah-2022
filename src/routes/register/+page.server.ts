@@ -2,6 +2,8 @@ import { db } from "$lib/server/database";
 import type { PageServerLoad } from ".svelte-kit/types/src/routes/$types";
 import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import { hash } from "argon2";
+import { tasks } from "$lib/task";
+import { addTasks } from "$lib/server/task";
 
 export const load: PageServerLoad = async ({ locals }) => {
     if (locals.user) throw redirect(302, "/group-select");
@@ -32,7 +34,15 @@ export const actions: Actions = {
 
         const session = await db.session.create({
             data: { user: { create: { email, password, coins: 0, username: "Hackyouser" } } },
+            include: {
+                user: true
+            }
         });
+
+        // add tasks
+        addTasks(session.user, Object.entries(tasks).map((el) => ({ name: el[0], ...el[1] })));
+        // add items
+
 
         event.cookies.set("session", session.id, { httpOnly: true, secure: true });
 
