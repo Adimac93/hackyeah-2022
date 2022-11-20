@@ -28,6 +28,8 @@
             <Recipe {recipe} />
             <Button type="primary">Craft</Button>
         </li>
+    {:else}
+        <p>You can't craft any recipes.</p>
     {/each}
 </ul>
 
@@ -38,6 +40,8 @@
             <Recipe {inventory} {recipe} />
             <Button type="primary" disabled>Craft</Button>
         </li>
+    {:else}
+        <p>You can't craft any recipes.</p>
     {/each}
 </ul>
 
