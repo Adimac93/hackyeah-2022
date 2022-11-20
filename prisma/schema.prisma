@@ -23,13 +23,14 @@ model User {
 }
 
 model ItemType {
-  id      String       @id @default(uuid())
-  name    String
-  cost    BigInt
-  icon    String
-  items   Item[]
+  id         String       @id @default(uuid())
+  name       String
+  cost       BigInt
+  icon       String
+  items      Item[]
   recipeItem RecipeItem[]
-  recipe  Recipe[]
+  recipe     Recipe[]
+  ShopOffert ShopOffert[]
 }
 
 model Item {
@@ -68,9 +69,17 @@ enum TradeStatus {
   CANCELED
 }
 
+model ShopOffert {
+  id     String   @id @default(uuid())
+  type   ItemType @relation(fields: [typeId], references: [id])
+  typeId String
+  count  Int
+  cost   Int
+}
+
 model Group {
   id      String        @id @default(uuid())
-  name String
+  name    String
   users   UserGroup[]
   invites GroupInvite[]
 }
@@ -112,6 +121,7 @@ model RecipeItem {
   itemId   String
   recipe   Recipe   @relation(fields: [recipeId], references: [id])
   recipeId String
-  count Int
+  count    Int
+
   @@id([itemId, recipeId])
 }
