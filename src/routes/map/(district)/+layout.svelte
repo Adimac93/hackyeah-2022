@@ -1,7 +1,10 @@
 <script type="ts">
+    import type { LayoutData } from "./$types";
     import Button from "$lib/components/Button.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
+
+    export let data: LayoutData;
 
     let dialogOpen = false;
     let healthPercent = 0.69;
@@ -13,23 +16,32 @@
 </script>
 
 <div class="wrapper">
-    <slot/>
+    <slot />
     <header class="header">
         <div class="header-left">
-            <div>❤ <div class="health-bar" style:--fullness={healthPercent}><div class="health-bar-fill"></div></div></div>
-            <div>💰 4.20</div>
+            <div>
+                ❤ <div class="health-bar" style:--fullness={healthPercent}>
+                    <div class="health-bar-fill" />
+                </div>
+            </div>
+            <div>💰 {data.coins}</div>
         </div>
         <div class="header-right">
             <div>Some kind of info on the right side idk</div>
         </div>
     </header>
-    <Dialog title="Menu" isOpen={dialogOpen} on:dialogClose={() => dialogOpen = false} useButtons={false}>
+    <Dialog
+        title="Menu"
+        isOpen={dialogOpen}
+        on:dialogClose={() => (dialogOpen = false)}
+        useButtons={false}
+    >
         <div class="links">
             <LinkButton type="secondary" href="/map">Map</LinkButton>
             <LinkButton type="destructive" href="/map">???</LinkButton>
             <LinkButton type="primary" href="/map">Profit</LinkButton>
         </div>
-        <div class="divider"></div>
+        <div class="divider" />
         <div class="bottom-buttons">
             <form method="POST" action="/logout">
                 <Button type="destructive">Log out</Button>
@@ -38,12 +50,12 @@
         </div>
     </Dialog>
     <!-- <Button class="menu" type="primary" shape="round" on:click={() => dialogOpen = true}><img src="/menu_icon.png" alt="Menu"></Button> -->
-    <button class="menu-button" on:click={() => dialogOpen = true}>
-        <img src="/menu_icon.png" alt="menu">
+    <button class="menu-button" on:click={() => (dialogOpen = true)}>
+        <img src="/menu_icon.png" alt="menu" />
     </button>
 </div>
 
-<svelte:window on:keyup={handleEscape}/>
+<svelte:window on:keyup={handleEscape} />
 
 <style lang="scss">
     .wrapper {

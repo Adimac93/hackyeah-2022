@@ -15,7 +15,7 @@ model User {
   username String
   email    String     @unique
   password String
-  coins    BigInt
+  coins    Int
   items    Item[]
   trades   Trade[]
   group    UserGroup?
@@ -23,11 +23,11 @@ model User {
 }
 
 model ItemType {
-  id         String       @id @default(uuid())
-  name       String
-  cost       BigInt
-  icon       String
-  items      Item[]
+  id      String       @id @default(uuid())
+  name    String
+  cost    Int
+  icon    String
+  items   Item[]
   recipeItem RecipeItem[]
   recipe     Recipe[]
   ShopOffert ShopOffert[]
@@ -50,7 +50,7 @@ model Trade {
   destinationUserId String
   items             TradeItem[]
   status            TradeStatus
-  cost              BigInt
+  cost              Int
 }
 
 model TradeItem {
