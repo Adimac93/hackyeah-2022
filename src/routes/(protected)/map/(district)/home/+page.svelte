@@ -1,8 +1,10 @@
-<img src="/home_district.png" alt="Home district" />
+<img src="/home_district.png" alt="Home district" class="background-image" />
 
 <style>
-    img {
+    .background-image {
         display: block;
-        height: 100vh;
+        margin: auto;
+        min-height: 100%;
+        aspect-ratio: 1190 / 567;
     }
 </style>
