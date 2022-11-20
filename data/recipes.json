@@ -1,0 +1,9 @@
+[
+    {
+        "output": { "name": "Donut with Custard", "count": 1 },
+        "ingredients": [
+            { "name": "Donut", "count": 1 },
+            { "name": "Custard", "count": 2 }
+        ]
+    }
+]
