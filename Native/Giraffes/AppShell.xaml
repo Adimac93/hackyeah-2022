@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:Giraffes"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="false"
-    Title="Game with giraffes">
+    Title="Zero Waste Giraffe">
 
     <ShellContent
         Title="Home"

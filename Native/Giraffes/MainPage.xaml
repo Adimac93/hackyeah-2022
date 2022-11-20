@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Giraffes.MainPage">
 
-    <WebView Source="https://learn.microsoft.com/dotnet/maui" />
+    <!-- CONFIGURE APPLICATION SERVICE DOMAIN -->
+    <WebView x:Name="Browser" Source="http://10.250.192.134:5173/login" />
 
 </ContentPage>
