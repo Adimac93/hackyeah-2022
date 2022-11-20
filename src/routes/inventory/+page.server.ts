@@ -4,7 +4,7 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
     if (!locals.user) {
-        throw redirect(300, "/");
+        throw redirect(301, "/");
     }
 
     let items = await db.item.findMany({
@@ -22,5 +22,5 @@ export const load: PageServerLoad = async ({ locals }) => {
         };
     });
 
-    return returnItems;
+    return { data: returnItems };
 };
