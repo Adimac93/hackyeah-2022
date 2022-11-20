@@ -12,14 +12,11 @@
     // in pixels
     let offsetX = 720;
     let offsetY = 368;
-    let offsetStart = { x: offsetX, y: offsetY };
-    let scale = 1.0;
 
     let evCache: PointerEvent[] = [];
 
     function startDragging(ev: PointerEvent) {
         evCache.push(ev);
-        offsetStart = { x: offsetX, y: offsetY };
         hideCard();
     }
 
@@ -31,14 +28,11 @@
         if (evCache.length > 0) {
             offsetX += ev.movementX;
             offsetY += ev.movementY;
-
-            // limit it so the map never goes off screen
         }
     }
 
     function stopDragging(ev: PointerEvent) {
         evCache = evCache.filter((cachedEv) => cachedEv.pointerId != ev.pointerId);
-        console.log(evCache);
     }
 </script>
 
