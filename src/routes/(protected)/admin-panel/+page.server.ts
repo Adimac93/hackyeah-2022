@@ -22,6 +22,12 @@ export const load: PageServerLoad = async ({ locals }) => {
                 },
             },
         }),
+        pendingInvites: await db.groupInvite.findMany({
+            where: { groupId: userGroup.groupId },
+            select: {
+                email: true
+            }
+        })
     };
 };
 
@@ -42,14 +48,17 @@ export const actions: Actions = {
 
         switch (type) {
             case "invite":
-                const email = form.get("email");
+                const email = form.get("email")?.toString();
                 if (!email)
                     break;
+
+                if (await db.groupInvite.findFirst({ where: { groupId: userGroup.groupId, email } }))
+                    return invalid(401, {});
 
                 await db.groupInvite.create({
                     data: {
                         group: { connect: { id: userGroup.groupId } },
-                        email: email.toString(),
+                        email
                     },
                 });
                 return;

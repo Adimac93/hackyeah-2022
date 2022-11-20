@@ -38,12 +38,11 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="container">
-    <div class="map"
+    <div
+        class="map"
         on:click={hideCard}
-        style:--offsetX="{offsetX}px" style:--offsetY="{offsetY}px"
-        on:pointerdown={startDragging}
-        on:pointerup={stopDragging}
-        on:pointercancel={stopDragging}
+        style:--offsetX="{offsetX}px"
+        style:--offsetY="{offsetY}px"
     >
         <img src="https://i.imgur.com/PtPjiDQ.png" alt="map" />
         {#each data.districts as point}
@@ -52,7 +51,12 @@
     </div>
 </div>
 
-<svelte:window on:pointermove={handleMove}/>
+<svelte:window
+    on:pointermove={handleMove}
+    on:pointerdown={startDragging}
+    on:pointerup={stopDragging}
+    on:pointercancel={stopDragging}
+/>
 
 <style>
     .container {
@@ -61,6 +65,7 @@
         overflow: hidden;
         display: grid;
         place-items: center;
+        background-color: #eeeeee;
     }
 
     .map {

@@ -37,12 +37,13 @@
     <slot />
     <header class="header">
         <div class="header-left">
-            <div>
-                ❤ <div class="health-bar" style:--fullness={healthPercent}>
+            <div class="health">
+                <img src="/city_health.png" alt="❤ ">
+                <div class="health-bar" style:--fullness={healthPercent}>
                     <div class="health-bar-fill" />
                 </div>
             </div>
-            <div>💰 {data.coins}</div>
+            <div class="money"><img src="/founds.png" alt="Money"><span>{data.coins}</span></div>
             {#each tasks as task}
                 <Button type="primary" on:click={() => claimTask(task.id, task.name)}>Claim task {task.name}</Button>
             {/each}
@@ -76,7 +77,7 @@
     </button>
 
     <button class="map-button" on:click={() => goto("/map")}>
-        <img src="/menu_icon.png" alt="Map" />
+        <img src="https://i.imgur.com/GRq3qYo.png" alt="Map" />
     </button>
 </div>
 
@@ -111,10 +112,21 @@
         text-align: right;
     }
 
+    .health {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: 4px;
+        img {
+            height: 2rem;
+            display: block;
+        }
+    }
+
     .health-bar {
         display: inline-block;
-        width: 100px;
-        height: 1rem;
+        width: 150px;
+        height: 1.25rem;
         border: 2px solid black;
     }
 
@@ -122,6 +134,20 @@
         background-color: red;
         width: calc(100% * var(--fullness));
         height: 100%;
+    }
+
+    .money {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        img {
+            height: 2rem;
+            display: block;
+        }
+
+        span {
+            font-size: 2rem;
+        }
     }
 
     .links {
@@ -151,7 +177,7 @@
         border: none;
         cursor: pointer;
         img {
-            height: 4rem;
+            height: 3rem;
         }
     }
 
