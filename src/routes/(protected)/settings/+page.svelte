@@ -9,7 +9,15 @@
 {#if data.isOwner}
     <LinkButton type="primary" href="/admin-panel">Admin Panel</LinkButton>
 {:else}
-    <Button type="destructive">Leave a group</Button>
+    <form method="POST" class="form">
+        <input type="hidden" name="type" value="leave" />
+    
+        <Button type="destructive">Leave a group</Button>
+    </form>
 {/if}
 
-<Button type="destructive">Delete account</Button>
+<form method="POST" class="form">
+    <input type="hidden" name="type" value="delete" />
+
+    <Button type="destructive">Delete account</Button>
+</form>
