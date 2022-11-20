@@ -22,7 +22,8 @@
     let dragStart: { x: number, y: number } | null = null;
 
     function startDragging(ev: MouseEvent | TouchEvent) {
-        const mousePos = ev instanceof TouchEvent ? { x: ev.touches[0].clientX, y: ev.touches[0].clientY } : { x: ev.clientX, y: ev.clientY };
+        // @ts-ignore
+        const mousePos = ev.touches ? { x: ev.touches[0].clientX, y: ev.touches[0].clientY } : { x: ev.clientX, y: ev.clientY };
         dragStart = mousePos;
         offsetStart = { x: offsetX, y: offsetY };
         scaleStart = scale;
