@@ -26,6 +26,10 @@
     </form>
 {/each}
 
+{#each data.pendingInvites as invite}
+    <p>{invite.email}</p>
+{/each}
+
 <form method="POST" class="form">
     <input type="hidden" name="type" value="delete" />
     <Button type="destructive">Delete group</Button>
