@@ -1,7 +1,12 @@
 <script lang="ts">
+    import Dialog from "./Dialog.svelte";
+
     let visible = false;
+
+    let dialogOpen = false;
     function displayHelp() {
-        alert("This is help, apparently. Can I go back to eating those delicious leaves now?")
+        // alert("This is help, apparently. Can I go back to eating those delicious leaves now?")
+        dialogOpen = !dialogOpen;
     }
 </script>
 
@@ -15,6 +20,23 @@
         <div class="toggler"></div>
     </div>
 </div>
+
+
+<Dialog title="Guide" isOpen={dialogOpen} on:dialogClose={() => (dialogOpen = false)}>
+    <!-- this is placeholder help -->
+    <h2>Basics</h2>
+    <p>
+        This is a social game, where your goal is to complete tasks and collaborate with others to progress.
+    </p>
+    <nav class="guide-nav">
+        <a href="/">Completing daily tasks</a>
+        <a href="/">Making use of your resources</a>
+        <a href="/">Working with others</a>
+    </nav>
+    <p>
+        <a href="/">About the game</a>
+    </p>
+</Dialog>
 
 <style lang="scss">
     .giraffe-box {
@@ -47,6 +69,10 @@
         height: 200px;
         transform: scaleX(-1);
         cursor: pointer;
+    }
+
+    .guide-nav a {
+        display: block;
     }
 
     .toggler-wrapper {
