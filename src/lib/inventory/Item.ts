@@ -1,5 +1,5 @@
 export interface PartialItem {
-    id: string,
+    id: string;
     name: string;
     icon: string;
     count: number;
@@ -7,4 +7,4 @@ export interface PartialItem {
 
 export type Item = PartialItem & {
     cost: number;
-}
+};

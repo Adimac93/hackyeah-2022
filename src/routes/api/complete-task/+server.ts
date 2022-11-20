@@ -4,8 +4,7 @@ import { tasks } from "$lib/task";
 import { UserHelper } from "$lib/server/UserHelper";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
-    if (!locals.user)
-        throw new Error("Invalid user");
+    if (!locals.user) throw new Error("Invalid user");
     const { id, name } = await request.json();
     await completeTask(id as string, tasks[name].cooldown);
     if (tasks[name].reward.coins) {
@@ -13,8 +12,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     }
 
     for (const item of tasks[name].reward.items ?? []) {
-
     }
 
     return new Response();
-}
+};

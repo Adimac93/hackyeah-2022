@@ -11,22 +11,22 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="giraffe-box" class:visible={visible}>
+<div class="giraffe-box" class:visible>
     <div class="column" on:click={displayHelp}>
         <strong class="heading">Guide</strong>
-        <img src="/giraffe.png" alt="Giraffe" title="Guide" class="giraffe">
+        <img src="/giraffe.png" alt="Giraffe" title="Guide" class="giraffe" />
     </div>
-    <div class="toggler-wrapper" on:click={() => visible = !visible}>
-        <div class="toggler"></div>
+    <div class="toggler-wrapper" on:click={() => (visible = !visible)}>
+        <div class="toggler" />
     </div>
 </div>
-
 
 <Dialog title="Guide" isOpen={dialogOpen} on:dialogClose={() => (dialogOpen = false)}>
     <!-- this is placeholder help -->
     <h2>Basics</h2>
     <p>
-        This is a social game, where your goal is to complete tasks and collaborate with others to progress.
+        This is a social game, where your goal is to complete tasks and collaborate with others to
+        progress.
     </p>
     <nav class="guide-nav">
         <a href="/">Completing daily tasks</a>
@@ -61,7 +61,7 @@
 
         // giraffe image + 1 padding
         transform: translateX(-158px);
-        transition: transform .3s ease;
+        transition: transform 0.3s ease;
     }
 
     .giraffe {
@@ -92,7 +92,7 @@
     .giraffe-box.visible {
         transform: none;
         .toggler {
-            transform: scaleX(-1)
+            transform: scaleX(-1);
         }
     }
 </style>

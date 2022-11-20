@@ -11,7 +11,6 @@
     class:primary={type == "primary"}
     class:secondary={type == "secondary"}
     class:destructive={type == "destructive"}
-
     class:rectangle={shape == "rectangle"}
     class:round={shape == "round"}
     {...$$restProps}

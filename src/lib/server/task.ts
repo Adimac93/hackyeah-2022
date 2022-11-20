@@ -18,10 +18,7 @@ export const checkTask = async (userId: string, area: Area) => {
     return returnedTasks.filter((task) => task != undefined);
 };
 
-export const addTasks = async (
-    user: User,
-    tasks: (Task & { name: string })[]
-) => {
+export const addTasks = async (user: User, tasks: (Task & { name: string })[]) => {
     await db.task.createMany({
         data: tasks.map((task) => ({
             userId: user.id,
@@ -29,18 +26,15 @@ export const addTasks = async (
             area: task.area as Area,
             lastAccessed: new Date(),
             timeToRestart: task.cooldown,
-        }))
+        })),
     });
-}
+};
 
-export const completeTask = async (
-    taskId: string,
-    secondsToRestart: number
-) => {
+export const completeTask = async (taskId: string, secondsToRestart: number) => {
     let now = new Date();
     await db.task.update({
         where: {
-            id: taskId
+            id: taskId,
         },
         data: {
             lastAccessed: now,

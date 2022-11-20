@@ -16,12 +16,15 @@
         // ask the backend to complete the task
         await fetch("/api/complete-task", {
             method: "POST",
-            body: JSON.stringify({id: taskID, name: taskName}),
+            body: JSON.stringify({ id: taskID, name: taskName }),
             headers: {
-                "content-type": "application/json"
-            }
+                "content-type": "application/json",
+            },
         });
-        tasks.splice(tasks.findIndex((el) => el.id == taskID), 1);
+        tasks.splice(
+            tasks.findIndex((el) => el.id == taskID),
+            1
+        );
         // @ts-ignore
         data.coins += taskTypes[taskName].reward.coins;
         tasks = tasks;
@@ -40,14 +43,16 @@
     <header class="header">
         <div class="header-left">
             <div class="health">
-                <img src="/city_health.png" alt="❤ ">
+                <img src="/city_health.png" alt="❤ " />
                 <div class="health-bar" style:--fullness={healthPercent}>
                     <div class="health-bar-fill" />
                 </div>
             </div>
-            <div class="money"><img src="/founds.png" alt="Money"><span>{data.coins}</span></div>
+            <div class="money"><img src="/founds.png" alt="Money" /><span>{data.coins}</span></div>
             {#each tasks as task}
-                <Button type="primary" on:click={() => claimTask(task.id, task.name)}>Claim task {task.name}</Button>
+                <Button type="primary" on:click={() => claimTask(task.id, task.name)}
+                    >Claim task {task.name}</Button
+                >
             {/each}
         </div>
         <div class="header-right">
@@ -195,7 +200,8 @@
         }
     }
 
-    .menu-button, .map-button {
+    .menu-button,
+    .map-button {
         position: fixed;
         display: block;
         background: transparent;

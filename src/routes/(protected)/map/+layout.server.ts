@@ -8,5 +8,5 @@ export const load: LayoutServerLoad = async ({ locals }) => {
         select: { coins: true },
     });
     const taskPromise = checkTask(locals.user!.id, "HOME");
-    return { coins: (await coinsPromise)?.coins ?? 0, tasks: (await taskPromise) };
+    return { coins: (await coinsPromise)?.coins ?? 0, tasks: await taskPromise };
 };

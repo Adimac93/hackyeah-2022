@@ -25,23 +25,20 @@ export const load: PageServerLoad = async ({ locals }) => {
         pendingInvites: await db.groupInvite.findMany({
             where: { groupId: userGroup.groupId },
             select: {
-                email: true
-            }
-        })
+                email: true,
+            },
+        }),
     };
 };
 
 export const actions: Actions = {
     default: async (event) => {
         let user = event.locals.user;
-        if (!user)
-            return invalid(401, {});
+        if (!user) return invalid(401, {});
 
         const userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
-        if (!userGroup)
-            return invalid(400, {});
-        if (!userGroup.isOwner)
-            return invalid(400, {});
+        if (!userGroup) return invalid(400, {});
+        if (!userGroup.isOwner) return invalid(400, {});
 
         const form = await event.request.formData();
         let type = form.get("type")?.toString();
@@ -49,23 +46,23 @@ export const actions: Actions = {
         switch (type) {
             case "invite":
                 const email = form.get("email")?.toString();
-                if (!email)
-                    break;
+                if (!email) break;
 
-                if (await db.groupInvite.findFirst({ where: { groupId: userGroup.groupId, email } }))
+                if (
+                    await db.groupInvite.findFirst({ where: { groupId: userGroup.groupId, email } })
+                )
                     return invalid(401, {});
 
                 await db.groupInvite.create({
                     data: {
                         group: { connect: { id: userGroup.groupId } },
-                        email
+                        email,
                     },
                 });
                 return;
             case "kick":
                 const userId = form.get("userId")?.toString();
-                if (!userId)
-                    break;
+                if (!userId) break;
 
                 const group = await db.group.findUniqueOrThrow({
                     where: { id: userGroup.groupId },
@@ -73,10 +70,8 @@ export const actions: Actions = {
                 });
 
                 const f = group.users.find((x) => x.groupId == group.id);
-                if (!f)
-                    return invalid(401, {});
-                if (f.isOwner)
-                    return invalid(400, { info: "Unable to kick owner of the group." });
+                if (!f) return invalid(401, {});
+                if (f.isOwner) return invalid(400, { info: "Unable to kick owner of the group." });
 
                 await db.user.update({
                     where: { id: userId },
@@ -89,7 +84,7 @@ export const actions: Actions = {
                 await AdminPanel.deleteGroup(userGroup.groupId);
                 throw redirect(302, "/group-select");
         }
-        
+
         return invalid(400, { info: "missing fields" });
     },
 };

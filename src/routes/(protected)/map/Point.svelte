@@ -16,10 +16,19 @@
     <img src="https://i.imgur.com/QSnusCP.png" alt="square" />
 </button>
 {#if $selectedPoint == point}
-    <div transition:fade={{ duration: 200 }} style:left="{point.x}%" style:top="{point.y}%" class:tt-top={ point.y >= 50 } class:tt-bottom={ point.y < 50 } class="tooltip">
+    <div
+        transition:fade={{ duration: 200 }}
+        style:left="{point.x}%"
+        style:top="{point.y}%"
+        class:tt-top={point.y >= 50}
+        class:tt-bottom={point.y < 50}
+        class="tooltip"
+    >
         <h2>{point.title}</h2>
         <p>{point.description}</p>
-        <a href="/map/{point.id}"><img class="arrow" src="https://i.imgur.com/WeYp8NK.png" alt="Go There"></a>
+        <a href="/map/{point.id}"
+            ><img class="arrow" src="https://i.imgur.com/WeYp8NK.png" alt="Go There" /></a
+        >
     </div>
 {/if}
 

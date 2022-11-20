@@ -23,7 +23,13 @@
     .global-wrapper {
         width: 100%;
         height: 100vh;
-        background: linear-gradient(0.17turn, rgba(59,129,136,1) 26%, rgba(9,121,98,1) 49%, rgba(7,136,125,1) 67%, rgba(0,212,255,1) 100%);
+        background: linear-gradient(
+            0.17turn,
+            rgba(59, 129, 136, 1) 26%,
+            rgba(9, 121, 98, 1) 49%,
+            rgba(7, 136, 125, 1) 67%,
+            rgba(0, 212, 255, 1) 100%
+        );
         display: grid;
         place-items: center;
     }
