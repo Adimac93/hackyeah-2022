@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 
-export const actions: PageServerLoad = ({ locals }) => {
+export const load: PageServerLoad = ({ locals }) => {
     const user = locals.user!;
-    return { score: user.score, email: user.email, username: user, coins: user.coins };
+    return { score: user.score, email: user.email, username: user.username, coins: user.coins };
 };
