@@ -4,8 +4,26 @@
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Dialog from "$lib/components/Dialog.svelte";
     import { goto } from "$app/navigation";
+    import type { FullTask } from "$lib/task";
+    import { tasks as taskTypes } from "$lib/task";
 
     export let data: LayoutData;
+    let tasks: FullTask[] = data.tasks;
+
+    async function claimTask(taskID: string, taskName: string) {
+        // ask the backend to complete the task
+        await fetch("/api/complete-task", {
+            method: "POST",
+            body: JSON.stringify({id: taskID, name: taskName}),
+            headers: {
+                "content-type": "application/json"
+            }
+        });
+        tasks.splice(tasks.findIndex((el) => el.id == taskID), 1);
+        // @ts-ignore
+        data.coins += taskTypes[taskName].reward;
+        tasks = tasks;
+    }
 
     let dialogOpen = false;
     let healthPercent = 0.69;
@@ -19,13 +37,16 @@
     <slot />
     <header class="header">
         <div class="header-left">
-            <div>
-                <img style="width: 1rem" src="/city_health.png" alt="❤ ">
+            <div class="health">
+                <img src="/city_health.png" alt="❤ ">
                 <div class="health-bar" style:--fullness={healthPercent}>
                     <div class="health-bar-fill" />
                 </div>
             </div>
-            <div><img  style="width: 1rem; margin-top: 5px" src="/founds.png" alt="💰"> {data.coins}</div>
+            <div class="money"><img src="/founds.png" alt="Money"><span>{data.coins}</span></div>
+            {#each tasks as task}
+                <Button type="primary" on:click={() => claimTask(task.id, task.name)}>Claim task {task.name}</Button>
+            {/each}
         </div>
         <div class="header-right">
             <div>Time until end of event</div>
@@ -91,10 +112,21 @@
         text-align: right;
     }
 
+    .health {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: 4px;
+        img {
+            height: 2rem;
+            display: block;
+        }
+    }
+
     .health-bar {
         display: inline-block;
-        width: 100px;
-        height: 1rem;
+        width: 150px;
+        height: 1.25rem;
         border: 2px solid black;
     }
 
@@ -102,6 +134,20 @@
         background-color: red;
         width: calc(100% * var(--fullness));
         height: 100%;
+    }
+
+    .money {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        img {
+            height: 2rem;
+            display: block;
+        }
+
+        span {
+            font-size: 2rem;
+        }
     }
 
     .links {
