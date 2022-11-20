@@ -1,12 +1,7 @@
 import { db } from "$lib/server/database";
-import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals }) => {
-    if (!locals.user) {
-        throw redirect(300, "/");
-    }
-
+export const load: PageServerLoad = async () => {
     let recipes = await db.recipe.findMany({
         include: { ingredients: { include: { item: true } }, outputItem: true },
     });

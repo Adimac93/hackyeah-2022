@@ -3,10 +3,7 @@ import { invalid, redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
-    let user = locals.user;
-    if (!user)
-        throw redirect(302, "/401");
-
+    const user = locals.user!;
     let userGroup = await db.userGroup.findUnique({ where: { userId: user.id } });
     if (userGroup)
         throw redirect(302, "/");

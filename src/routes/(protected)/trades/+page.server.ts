@@ -1,16 +1,11 @@
 import { db } from "$lib/server/database";
-import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
-    if (!locals.user) {
-        throw redirect(300, "/login");
-    }
-
     let trades = await db.trade.findMany({
         where: {
             sourceUser: {
-                group: { group: { is: { users: { some: { user: { id: locals.user.id } } } } } },
+                group: { group: { is: { users: { some: { user: { id: locals.user!.id } } } } } },
             },
         },
         select: {
